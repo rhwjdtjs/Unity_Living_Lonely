@@ -20,14 +20,14 @@ public class AttackMonster : Monster
   //  }
     public void TargetChase(Vector3 _targetPos)
     {
-        isChasing = true;
-        destination = _targetPos;
-        nav.speed = runSpeed;
+        isChasing = true; //추격 상태 활성화
+        destination = _targetPos; //목적지를 플레이어로 설정
+        nav.speed = runSpeed; //추격상태라 이동속도를 달리는 속도로 지정
         isRunning = true;
-        anim.SetBool("Run", isRunning);
+        anim.SetBool("Run", isRunning); //애니메이션 활성화
         
         if (!isDead)
-            nav.SetDestination(destination);
+            nav.SetDestination(destination); //좀비가 죽지 않았다면 목적지로 이동
     }
 
     public override void Damage(int _dmg, Vector3 _targetPos)
