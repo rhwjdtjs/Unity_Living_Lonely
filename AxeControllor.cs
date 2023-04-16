@@ -15,7 +15,7 @@ public class AxeControllor : MeleeWeaponControllor
         WeaponManager.WeaponNow = currentMeleeWeapon.GetComponent<Transform>();
         WeaponManager.WeaponNowAnim = currentMeleeWeapon.anim;
     }
-    public void Moving()
+    public void Moving() //이동 애니메이션 함수
     {
         if (!thePlayer.isRun && thePlayer.isGround)
         {
@@ -54,7 +54,7 @@ public class AxeControllor : MeleeWeaponControllor
     }
     void Update()
     {
-        if (isActivate)
+        if (isActivate) //무기를 들고있을때 함수 실행
             TryAttack();
             Moving();
     }
@@ -67,18 +67,18 @@ public class AxeControllor : MeleeWeaponControllor
             {
                 isSwing = false;
                 Debug.Log(hitInfo.transform.name);
-                if (hitInfo.transform.tag == "theMonster")
+                if (hitInfo.transform.tag == "theMonster") //때린상대가 몬스터 태그라면
                 {
-                    hitanim.SetTrigger("hit");
-                    hitsound.PlayOneShot(currentMeleeWeapon.HitSound);
-                    hitInfo.transform.GetComponent<Creature>().Damage(currentMeleeWeapon.damage, transform.position);
+                    hitanim.SetTrigger("hit"); //애니메이션 재생
+                    hitsound.PlayOneShot(currentMeleeWeapon.HitSound); //사운드 재생
+                    hitInfo.transform.GetComponent<Creature>().Damage(currentMeleeWeapon.damage, transform.position); //데미지를 입힘
                 }
             }
             yield return null;
         }
     }
 
-    public override void MeleeChangeWeapon(MeleeWeapon _closeWeapon)
+    public override void MeleeChangeWeapon(MeleeWeapon _closeWeapon) //무기를 활성화 시킴
     {
         base.MeleeChangeWeapon(_closeWeapon);
         isActivate = true;
