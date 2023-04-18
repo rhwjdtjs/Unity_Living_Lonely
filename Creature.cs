@@ -7,10 +7,10 @@ public class Creature : AttackMonster
     protected override void Update()
     {
         base.Update();
-        if (theFieldOfViewAngle.Sight() && !isDead && !isAttacking)
+        if (theFieldOfViewAngle.Sight() && !isDead && !isAttacking)//좀비의 시야각 이내에 있고 죽지않는 상태이고 공격중이 아니라면
         {
-            StopAllCoroutines();
-            StartCoroutine(CHASETARGETCO());
+            StopAllCoroutines(); //일단 실행중인 모든 코루틴을 중지하고
+            StartCoroutine(CHASETARGETCO()); //추격코르틴을 시작함
         }
     }
     protected override void RESETACTION()
@@ -27,7 +27,7 @@ public class Creature : AttackMonster
     {
         RandomSound();
 
-        int _random = Random.Range(0, 3); // 대기, 풀뜯기, 두리번, 걷기
+        int _random = Random.Range(0, 3); // 대기, 소리치기, 걷기
 
         if (_random == 0)
             Wait();
@@ -38,7 +38,7 @@ public class Creature : AttackMonster
     }
 
 
-    private void Shout()  // 두리번
+    private void Shout()  // 소리침
     {
         currentTime = waitTime;
         anim.SetTrigger("Shout");
