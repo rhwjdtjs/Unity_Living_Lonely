@@ -28,19 +28,19 @@ public class EffectItem : MonoBehaviour
     }
     public void UseItem(Item _item)
     {
-        if (_item.itemType == Item.ItemType.Equipment)
-            StartCoroutine(theWeaponManager.CHANGEWEAPONCO(_item.weaponType, _item.itemName));
-        if (_item.itemType == Item.ItemType.Used)
+        if (_item.itemType == Item.ItemType.Equipment) //아이템을 사용하면 불러오는 함수 만약 그 아이템이 무기라면
+            StartCoroutine(theWeaponManager.CHANGEWEAPONCO(_item.weaponType, _item.itemName)); //무기교체 시작
+        if (_item.itemType == Item.ItemType.Used) //소모 아이템이라면
         {
-            for (int i = 0; i < Effects.Length; i++)
+            for (int i = 0; i < Effects.Length; i++) //배열안에서 찾는다
             {
-                if (Effects[i].itemName == _item.itemName)
+                if (Effects[i].itemName == _item.itemName) //배열안에 있는 아이템 이름과 비교하려는 아이템의 이름과 같다면
                 {
-                    for (int j = 0; j < Effects[i].part.Length; j++)
+                    for (int j = 0; j < Effects[i].part.Length; j++) //효과명을 찾음
                     {
-                        switch (Effects[i].part[j])
+                        switch (Effects[i].part[j]) //만약 그 효과명이
                         {
-                            case HP:
+                            case HP: //체력이라면 체력을 증가시킴
                                 theStatus.IncreaseHP(Effects[i].num[j]);
                                 break;
                             case THIRSTY:
