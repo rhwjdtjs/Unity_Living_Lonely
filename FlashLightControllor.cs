@@ -8,23 +8,23 @@ public class FlashLightControllor : MonoBehaviour
     private bool isturnOn = false;
     void Start()
     {
-        Flash_Light = GetComponent<Light>();
+        Flash_Light = GetComponent<Light>(); //Light 컴포넌트를 가져온다
     }
     private void TryTrunOnOFF()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (Input.GetKeyDown(KeyCode.Mouse1)) //마우스 우클릭시
         {
-            isturnOn = !isturnOn;
+            isturnOn = !isturnOn; //isturnon이 true 이면 false 로 false 이면 true로
             if (isturnOn)
-                TurnOn();
+                TurnOn(); //true 일때
             else
-                TurnOff();
+                TurnOff(); //false 일때
         }
       
     }
     private void TurnOn()
     {
-        Flash_Light.enabled = true;
+        Flash_Light.enabled = true; //true일때 라이트 on
     }
     private void TurnOff()
     {
