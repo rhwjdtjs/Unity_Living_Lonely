@@ -25,8 +25,8 @@ public class Gun : MonoBehaviour
     public ParticleSystem muzzleFlash;  // 화염구 이펙트 재생을 담당할 파티클 시스템 컴포넌트
     public ParticleSystem finesightmuzzle;
     public AudioClip fire_Sound;    // 총 발사 소리 오디오 클립
-    public AudioClip Reload_Sound;
-    public AudioClip HitBody_Sound;
-    public AudioClip HitHead_Sound;
-    [SerializeField] public Animator crosshairanim;
+    public AudioClip Reload_Sound; //재장전 사운드
+    public AudioClip HitBody_Sound; //맞췄을때 사운드
+    public AudioClip HitHead_Sound; //헤드샷 사운드
+    [SerializeField] public Animator crosshairanim; //우클릭했을때 크로스헤어 사라지는 애니메이터
 }
