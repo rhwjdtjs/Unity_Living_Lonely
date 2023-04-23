@@ -24,103 +24,11 @@ public abstract class GunMainController : MonoBehaviour
     protected float gunAccuracy;
     protected RaycastHit hitInfo;  // 총알의 충돌 정보
     [SerializeField] private Animator hitanim;
-                                   // protected Slot[] theSlot;
-    /*
-    public virtual void GunMainChange(MeleeWeapon _closeWeapon)
-    {
-        if (WeaponManager.WeaponNow != null)
-            WeaponManager.WeaponNow.gameObject.SetActive(false);
-
-        currentMeleeWeapon = _closeWeapon;
-        WeaponManager.WeaponNow = currentMeleeWeapon.GetComponent<Transform>();
-        WeaponManager.WeaponNowAnim = currentMeleeWeapon.anim;
-
-        currentMeleeWeapon.transform.localPosition = Vector3.zero;
-        currentMeleeWeapon.gameObject.SetActive(true);
-    }
-    */
-    /*
-    private void Start()
-    {
-        theSlot = go_SlotsParent.GetComponentsInChildren<Slot>();
-        audioSource = GetComponent<AudioSource>();
-        WeaponManager.WeaponNow = currentGun.GetComponent<Transform>();
-        WeaponManager.WeaponNowAnim = currentGun.anim;
-    }
-    */
-    /*
-        void Update()
-        {
-            AmmoItemRifill();
-            if (WeaponManager.isRifle)
-
-            {
-                GunFireRateCalc();
-                if (!Inventory.invectoryActivated)
-                {
-                    TryFindSight();
-
-                    TryFire();
-                    TryReload();
-                    Moving();
-                }
-            }
-        }
-    */
-    /*
-        public void AmmoItemRifill()
-        {
-            currentGun.carryBulletCount = 0;
-            for (int i = 0; i < theSlot.Length; i++)
-            {
-                if (theSlot[i].item != null)
-                {
-
-                    currentGun.carryBulletCount = theSlot[i].itemCount;
-                    return;
-
-                }
-            }
-        }
-    
-        private void ammoReload(int _reloadammo)
-        {
-            for (int i = 0; i < theSlot.Length; i++)
-            {
-                if (theSlot[i].item != null)
-                {
-
-                    if (theSlot[i].item.itemName == "7.62mm ammo")
-                    {
-                        theSlot[i].SetSlotCount(-_reloadammo);
-                        Debug.Log(_reloadammo);
-                        return;
-                    }
-
-
-                    if (theSlot[i].item.itemName == "5.56mm ammo")
-                    {
-                        theSlot[i].SetSlotCount(-_reloadammo);
-                        Debug.Log(_reloadammo);
-                        return;
-                    }
-
-                    if (theSlot[i].item.itemName == "9mm ammo")
-                    {
-                        theSlot[i].SetSlotCount(-_reloadammo);
-                        Debug.Log(_reloadammo);
-                        return;
-                    }
-
-
-                }
-            }
-        }
-    */
-    protected abstract void ammoappear();
-    protected abstract void Ammotorifill();
-    protected abstract void ammoReload(int _reloadammo);
-    protected IEnumerator GunisfireFalse()
+     
+    protected abstract void ammoappear(); //자식 스크립트에 선언
+    protected abstract void Ammotorifill();//자식 스크립트에 선언
+    protected abstract void ammoReload(int _reloadammo);//자식 스크립트에 선언
+    protected IEnumerator GunisfireFalse() //총을 쐈는지 않쏘았는지 반환함
     {
         isfire = true;
         yield return new WaitForSeconds(10f);
@@ -128,7 +36,7 @@ public abstract class GunMainController : MonoBehaviour
         yield return null;
     }
    
-    protected void Moving()
+    protected void Moving() //각 무기에 맞은 애니메이션 재생
     {
         if (!thePlayer.isRun && thePlayer.isGround)
         {
@@ -168,22 +76,22 @@ public abstract class GunMainController : MonoBehaviour
 
     public void CancelReload()
     {
-        if (isReload)
+        if (isReload) //재정잔 중이라면
         {
-            StopAllCoroutines();
+            StopAllCoroutines(); //코루틴을 멈춰 강제로 재장전 캔슬
             isReload = false;
         }
     }
     public virtual void GunChange(Gun _gun)
     {
-        if (WeaponManager.WeaponNow != null)
-            WeaponManager.WeaponNow.gameObject.SetActive(false);
+        if (WeaponManager.WeaponNow != null) //지금 장착중인 무기가 있으면
+            WeaponManager.WeaponNow.gameObject.SetActive(false); //무기 교체를해야하니 현재 무기를 숨김
 
         currentGun = _gun;
         WeaponManager.WeaponNow = currentGun.GetComponent<Transform>();
-        WeaponManager.WeaponNowAnim = currentGun.anim;
+        WeaponManager.WeaponNowAnim = currentGun.anim; //현재 들고있는 무기로 애니메이션을 바뀜
 
-        currentGun.transform.localPosition = Vector3.zero;
+        currentGun.transform.localPosition = Vector3.zero; //현재 들고있는 무기 위치 수정
         currentGun.gameObject.SetActive(true);
 
         //isActivate = true;
@@ -198,18 +106,18 @@ public abstract class GunMainController : MonoBehaviour
         }
     }
 
-    protected void FindSight()
+    protected void FindSight() //정조준
     {
         isFindSightMode = !isFindSightMode;
         currentGun.crosshairanim.SetBool("finesight", isFindSightMode);
         currentGun.anim.SetBool("FineSight", isFindSightMode);
     }
-    protected void CancelFineSight()
+    protected void CancelFineSight() //정조준 취소
     {
         if (isFindSightMode)
             FindSight();
     }
-    protected void GunFireRateCalc()
+    protected void GunFireRateCalc() //총 발사시간 계산
     {
         if (currentFireRate > 0)
             currentFireRate -= Time.deltaTime;  // 즉, 1 초에 1 씩 감소시킨다.
@@ -241,7 +149,7 @@ public abstract class GunMainController : MonoBehaviour
 
     protected void Shoot()
     {
-        if (isFindSightMode)
+        if (isFindSightMode) //정조준일때
         {
            
             currentGun.anim.SetTrigger("FineSightShot");
@@ -255,7 +163,7 @@ public abstract class GunMainController : MonoBehaviour
             StartCoroutine(RetroActionCoroutine());
             StartCoroutine(GunisfireFalse());
         }
-        else
+        else //정조준이 아니고 일반상태에서 총을 쏠때
         {
             
             currentGun.anim.SetTrigger("Shot");
@@ -272,7 +180,7 @@ public abstract class GunMainController : MonoBehaviour
             StartCoroutine(GunisfireFalse());
         }
     }
-    protected IEnumerator RetroActionCoroutine()
+    protected IEnumerator RetroActionCoroutine() //반동 주는 함수
     {
         Vector3 recoilBack = new Vector3(originPos.x, originPos.x, currentGun.retroActionForce);     // 정조준 안 했을 때의 최대 반동
         Vector3 retroActionRecoilBack = new Vector3(currentGun.fineSightOriginPos.x, currentGun.fineSightOriginPos.y, currentGun.retroActionFineSightForce);  // 정조준 했을 때의 최대 반동
@@ -336,7 +244,7 @@ public abstract class GunMainController : MonoBehaviour
     {
         return currentGun;
     }
-    protected float GetAccuracy()
+    protected float GetAccuracy() //정확도 계산 함수
     {
         if (thePlayer.isWalk)
             gunAccuracy = 0.06f;
