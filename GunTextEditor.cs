@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class GunTextEditor : MonoBehaviour
+public class GunTextEditor : MonoBehaviour //무기에 따라 현재 장탄수가 표시됨
 {
     private Gun thegun;
     [SerializeField] Text pistol1;
