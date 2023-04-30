@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 [System.Serializable]
-public class SaveData
+public class SaveData //저장할때 데이터를 해당 인스턴스에 불러옴
 {
     public Vector3 playerPos;
     public Vector3 playerRot;
@@ -22,8 +22,8 @@ public class SaveData
 public class SaveLoad : MonoBehaviour
 {
     public SaveData savedata = new SaveData();
-    private string SAVE_DATA_DIRECTORY;
-    private string SAVE_FILENAME = "/SaveFile.txt";
+    private string SAVE_DATA_DIRECTORY; //경로
+    private string SAVE_FILENAME = "/SaveFile.txt"; //파일 이름
     private PlayerControllor theplayer;
     private Rifle1Contollor therifle1;
     private Rifle2Controller therifle2;
@@ -31,14 +31,14 @@ public class SaveLoad : MonoBehaviour
     private Pistol1Controllor thepistol1;
     private Pistol2Cpmtrpllor thepistol2;
     private TommygunControllor thetommy;
-    private ShotgunController theshotgun;
+    private ShotgunController theshotgun; //필요한 컴포넌트
     private Inventory theinven;
    
     void Start()
     {
-        SAVE_DATA_DIRECTORY = Application.dataPath + "/Saves/";
-        if (!Directory.Exists(SAVE_DATA_DIRECTORY))
-            Directory.CreateDirectory(SAVE_DATA_DIRECTORY);
+        SAVE_DATA_DIRECTORY = Application.dataPath + "/Saves/"; //경로
+        if (!Directory.Exists(SAVE_DATA_DIRECTORY)) //파일 경로가 존재하지 않으면
+            Directory.CreateDirectory(SAVE_DATA_DIRECTORY); //경로 생성
     }
 
     public void SaveData()
@@ -50,7 +50,7 @@ public class SaveLoad : MonoBehaviour
         savedata.playerRot = theplayer.transform.eulerAngles;
       //  savedata.bulletCount = thegunmain.Returnbulletcount();
         Slot[] slots= theinven.GetSlots();
-        for (int i = 0; i < slots.Length; i++)
+        for (int i = 0; i < slots.Length; i++) //인벤토리의 아이템 저장
         {
             if(slots[i].item!=null)
             {
@@ -69,7 +69,7 @@ public class SaveLoad : MonoBehaviour
     }
     public void LoadData()
     {
-        if (File.Exists(SAVE_DATA_DIRECTORY + SAVE_FILENAME))
+        if (File.Exists(SAVE_DATA_DIRECTORY + SAVE_FILENAME)) //세이브 파일이 있으면 로드 시작
         {
             string loadJson = File.ReadAllText(SAVE_DATA_DIRECTORY + SAVE_FILENAME);
             savedata = JsonUtility.FromJson<SaveData>(loadJson);
