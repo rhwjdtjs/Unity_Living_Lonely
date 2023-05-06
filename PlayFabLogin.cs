@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayFabLogin : MonoBehaviour
 {
+    //public static PlayFabLogin instance;
+  
     public InputField ID_Input_login;
     public InputField PW_Input_login;
     public InputField ID_Input;
@@ -20,8 +22,8 @@ public class PlayFabLogin : MonoBehaviour
     public Text ErrorText;
     public Text ErrorText2;
 
-    public string username;
-    private string password;
+    public static string username;
+    public static string password;
     private string username_login;
     private string password_login;
     private string email;
@@ -59,6 +61,7 @@ public class PlayFabLogin : MonoBehaviour
     {
         LoadingSceneManager.LoadScene("gamescene");
     }
+   
     public void ID_value_Changed()
     {
         username = ID_Input.text.ToString();

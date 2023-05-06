@@ -7,12 +7,14 @@ using PlayFab.ClientModels;
 public class Playfabsave : MonoBehaviour
 {
     private string titleId = "1C256";
-    private string saveDataPath = "Assets/Saves/SaveFile.txt";
+    private string saveDataPath;
 
     void Start()
     {
         PlayFabSettings.TitleId = titleId;
-        UploadSaveData();
+        saveDataPath = Application.persistentDataPath + "/gameSaveData.json";
+
+    UploadSaveData();
     }
 
     public void UploadSaveData()
