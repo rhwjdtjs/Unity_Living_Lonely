@@ -28,15 +28,15 @@ public class Inventory : MonoBehaviour
         if (!TotalGameManager.isPlayerDead)
         {
             TryOpenInventory();
-            if (invectoryActivated)
+            if (invectoryActivated) //인벤토리 활성화 중일때
             {
-                Cursor.lockState = CursorLockMode.None;
+                Cursor.lockState = CursorLockMode.None; //커서 활성화
                 Cursor.visible = true;
             }
                 
-            if(!invectoryActivated)
+            if(!invectoryActivated) //인벤토리 활성화중이 아닐때
             { 
-                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.lockState = CursorLockMode.Locked; //마우스 커서 잠금
                 Cursor.visible = false;
             }
         }
@@ -70,17 +70,17 @@ public class Inventory : MonoBehaviour
         itemdatabase.HideToolTip();
     }
 
-    public void GetItem(Item _item, int _count)
+    public void GetItem(Item _item, int _count) //아이템을 얻는 함수
     {
-        if (Item.ItemType.Equipment != _item.itemType)
+        if (Item.ItemType.Equipment != _item.itemType) //아이템이 장비 타입이 아니라면
         {
-            for (int i = 0; i < slots.Length; i++)
+            for (int i = 0; i < slots.Length; i++) //슬롯들을 확인후
             {
                 if (slots[i].item != null) 
                 {
                     if (slots[i].item.itemName == _item.itemName)
                     {
-                        slots[i].SetSlotCount(_count);
+                        slots[i].SetSlotCount(_count); //슬롯에 아이템을 추가한다
                         return;
                     }
                 }
@@ -90,7 +90,7 @@ public class Inventory : MonoBehaviour
         {
             if (slots[i].item == null)
             {
-                slots[i].AddItem(_item, _count);
+                slots[i].AddItem(_item, _count); //아이템 추가
                 return;
             }
         }
