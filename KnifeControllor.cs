@@ -14,7 +14,7 @@ public class KnifeControllor : MeleeWeaponControllor
             TryAttack();
             Moving();
     }
-    public void Moving()
+    public void Moving() //걷기 애니메이션
     {
         if (!thePlayer.isRun && thePlayer.isGround)
         {
@@ -51,7 +51,7 @@ public class KnifeControllor : MeleeWeaponControllor
         else if (!thePlayer.isRun)
             currentMeleeWeapon.anim.SetBool("Run", thePlayer.isRun);
     }
-    protected override IEnumerator HITCO()
+    protected override IEnumerator HITCO() //나이프 히트 함수
     {
         while (isSwing)
         {
@@ -70,7 +70,7 @@ public class KnifeControllor : MeleeWeaponControllor
         }
     }
 
-    public override void MeleeChangeWeapon(MeleeWeapon _closeWeapon)
+    public override void MeleeChangeWeapon(MeleeWeapon _closeWeapon) //무기교체
     {
         base.MeleeChangeWeapon(_closeWeapon);
         isActivate = true;
