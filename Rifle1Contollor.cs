@@ -6,8 +6,10 @@ public class Rifle1Contollor : GunMainController
 {
     public static bool isActivate = false;
     private Slot[] theSlot;
+    private SaveLoad thesave;
     private void Start()
     {
+        thesave = FindObjectOfType<SaveLoad>();
         WeaponManager.WeaponNow = currentGun.GetComponent<Transform>();
         WeaponManager.WeaponNowAnim = currentGun.anim;
         theSlot = go_SlotsParent.GetComponentsInChildren<Slot>();
@@ -21,10 +23,11 @@ public class Rifle1Contollor : GunMainController
     // Update is called once per frame
     void Update()
     {
+        thesave.savedata.bulletCountrifle1 = currentGun.currentBulletCount; //세이브 데이터 저장하기 위함
         
         if (isActivate)
         {
-            Ammotorifill();
+            Ammotorifill(); //매프레임마다 탄약이 있는지 확인하고 총의 장탄수에 업데이트
             
 
             GunFireRateCalc();
@@ -41,21 +44,21 @@ public class Rifle1Contollor : GunMainController
     }
     protected override void Ammotorifill()
     {
-        currentGun.carryBulletCount = 0;
+        currentGun.carryBulletCount = 0; //값 초기화
         for (int i = 0; i < theSlot.Length; i++)
         {
             if (theSlot[i].item != null)
             {
                 if (theSlot[i].item.itemName == "7.62mm ammo")
                 {
-                    currentGun.carryBulletCount = theSlot[i].itemCount;
+                    currentGun.carryBulletCount = theSlot[i].itemCount; //총의 총알수를 7.62 아이템의 갯수만큼 대입한다.
                     return;
                 }
             }
         }
     }
 
-    protected override void ammoReload(int _reloadammo)
+    protected override void ammoReload(int _reloadammo) //재장전
     {
         for (int i = 0; i < theSlot.Length; i++)
         {
@@ -63,7 +66,7 @@ public class Rifle1Contollor : GunMainController
             {
                 if (theSlot[i].item.itemName == "7.62mm ammo")
                 {
-                    theSlot[i].SetSlotCount(-_reloadammo);
+                    theSlot[i].SetSlotCount(-_reloadammo); //재장전 탄약 수만큼 아이템의 갯수도 줄인다.
                     Debug.Log(_reloadammo);
                     return;
                 }
