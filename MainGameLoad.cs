@@ -7,7 +7,7 @@ using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine.UI;
 
-public class MainGameLoad : MonoBehaviour
+public class MainGameLoad : MonoBehaviour //메인화면에서 플레이팹 로그인후 게임을 불러오는 과정
 {
     private SaveLoad thesaveload;
     public static MainGameLoad instance;
