@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pistol1Controllor : GunMainController
+public class Pistol1Controllor : GunMainController //Rifle1Controller¿Í µ¿ÀÏ
 {
     public static bool isActivate = false;
     private Slot[] theSlot;
