@@ -8,14 +8,21 @@ public class TotalGameManager : MonoBehaviour
     [SerializeField] private GameObject playeruiobject;
     [SerializeField] private StatusControllor thestatus;
     public int killcount = 0;
-    public static float survivaltimesecond = 0;
+    public static float survivaltimes;
+    [SerializeField] public static float survivaltimesecond = 0;
     public static int survivaltimeminute = 0;
     public static int survivaltimehour = 0;
     public static bool isPlayerDead = false;
     private PlayerSpawnManager theplayerspawn;
+    [SerializeField] private RealtimeRankingSystem rankingSystem;
     // Start is called before the first frame update
+    private void Awake()
+    {
+        rankingSystem = FindObjectOfType<RealtimeRankingSystem>();
+    }
     void Start()
     {
+        
         theplayerspawn = FindObjectOfType<PlayerSpawnManager>();
         thestatus = FindObjectOfType<StatusControllor>();
        theplayerspawn.RandomSelectSpawnPoint();
@@ -23,17 +30,17 @@ public class TotalGameManager : MonoBehaviour
     private void timerecord()
     {
         survivaltimesecond += Time.deltaTime;
-        if (survivaltimesecond > 59)
-        {
-            survivaltimesecond = 0;
-            survivaltimeminute++;
-
-            if (survivaltimeminute > 59)
-            {
-                survivaltimeminute = 0;
-                survivaltimehour++;
-            }
-        }
+        //if (survivaltimesecond > 59)
+       // {
+       //     survivaltimesecond = 0;
+       //     survivaltimeminute++;
+//
+       //     if (survivaltimeminute > 59)
+      //      {
+      //          survivaltimeminute = 0;
+      //          survivaltimehour++;
+     //       }
+     //   }
     }
     // Update is called once per frame
     void Update()
@@ -43,6 +50,15 @@ public class TotalGameManager : MonoBehaviour
         playerresqawn();
         if (Input.GetKeyDown(KeyCode.Escape))
             Application.Quit();
+        
+        if (Input.GetKeyDown(KeyCode.F11))
+        {
+            rankingSystem.UpdateStatistics(killcount, survivaltimesecond);
+        }
+        if (Input.GetKeyDown(KeyCode.F12))
+        {
+            rankingSystem.GetLeaderboard();
+        }
     }
     private void playerresqawn()
     {
