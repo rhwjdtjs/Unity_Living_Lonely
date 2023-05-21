@@ -11,7 +11,7 @@ public class PlayerSpawnManager : MonoBehaviour
     {
         RandomSelectSpawnPoint();
     }
-    public void RandomSelectSpawnPoint()
+    public void RandomSelectSpawnPoint() //플레이어를 특정 위치중에 램덤으로 스폰시킴
     {
         int number = Random.Range(0, playerspawnpoint.Length);
         theplayer.transform.position = playerspawnpoint[number].transform.position;
