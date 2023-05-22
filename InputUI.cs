@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class InputUI : MonoBehaviour
+public class InputUI : MonoBehaviour //아이템을 버릴때 불러오는 함수
 {
     [SerializeField] private Text text_Preview;
     [SerializeField] private Text text_Input;
@@ -21,7 +21,7 @@ public class InputUI : MonoBehaviour
         }
     }
 
-    public void Call()
+    public void Call() //UI를 불러오는함수
     {
         go_Base.SetActive(true);
         activated = true;
@@ -29,7 +29,7 @@ public class InputUI : MonoBehaviour
         text_Preview.text = SlotUtil.instance.slotUtil.itemCount.ToString();
     }
 
-    public void Cancel()
+    public void Cancel() //취소
     {
         activated = false;
         SlotUtil.instance.SetColor(0);
@@ -37,7 +37,7 @@ public class InputUI : MonoBehaviour
         SlotUtil.instance.slotUtil = null;
     }
 
-    public void OK()
+    public void OK() //아이템 버릴때 확인하는 함수
     {
         SlotUtil.instance.SetColor(0);
 
@@ -59,7 +59,7 @@ public class InputUI : MonoBehaviour
         StartCoroutine(DropItemCO(num));
     }
 
-    IEnumerator DropItemCO(int _num)
+    IEnumerator DropItemCO(int _num) //아이템을 버릴때
     {
         for (int i = 0; i < _num; i++)
         {
@@ -67,7 +67,7 @@ public class InputUI : MonoBehaviour
             {
                 Instantiate(SlotUtil.instance.slotUtil.item.itemPrefab,
                             thePlayer.transform.position + thePlayer.transform.forward,
-                            Quaternion.identity);
+                            Quaternion.identity); //플레이어 앞에 버린 아이템 프리팹 생성
             }
             SlotUtil.instance.slotUtil.SetSlotCount(-1);
             yield return new WaitForSeconds(0.05f);
