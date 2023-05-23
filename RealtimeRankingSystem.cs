@@ -4,6 +4,7 @@ using PlayFab;
 using PlayFab.ClientModels;
 using System.Collections.Generic;
 using PlayFab.DataModels;
+using System;
 
 public class RealtimeRankingSystem : MonoBehaviourPunCallbacks
 {
@@ -41,65 +42,178 @@ public class RealtimeRankingSystem : MonoBehaviourPunCallbacks
       //  PlayFabSettings.staticSettings.DeveloperSecretKey = PlayFabSecretKey;
     }
 
-    public void UpdateKillCount(int killCount)
-    {
-        currentKillCount = killCount;
-
-        // PlayFab로 킬 수 업데이트
-        var request = new UpdatePlayerStatisticsRequest
-        {
-            Statistics = new List<StatisticUpdate>
-            {
-                new StatisticUpdate
-                {
-                    StatisticName = LeaderboardStatisticName,
-                    Value = currentKillCount
-                }
-            }
-        };
-
-        PlayFabClientAPI.UpdatePlayerStatistics(request, OnUpdateStatisticsSuccess, OnUpdateStatisticsFailure);
-    }
+    
     public void UpdateStatistics(int killCount, float survivalTimeSeconds)
     {
-        var statistics = new List<StatisticUpdate>
-        {
-            new StatisticUpdate { StatisticName = "KillCount", Value = killCount },
-            new StatisticUpdate { StatisticName = "SurvivalTimeSeconds", Value = (int)survivalTimeSeconds }
-        };
+        // 기존의 킬 수와 생존 시간을 가져옵니다.
+        int previousKillCount = 0;
+        float previousSurvivalTime = 0;
 
-        var request = new UpdatePlayerStatisticsRequest { Statistics = statistics };
-        PlayFabClientAPI.UpdatePlayerStatistics(request, OnUpdateStatisticsSuccess, OnUpdateStatisticsFailure);
-
-        // 포톤에도 킬 수와 생존 시간 업로드
-        PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
-        {
-            { "KillCount", killCount },
-            { "SurvivalTimeSeconds", survivalTimeSeconds }
-        });
-    }
-
-    public void UpdateSurvivalTime(float survivalTime)
-    {
-        currentSurvivalTime = survivalTime;
-
-        // PlayFab로 생존 시간 업데이트
-        var request = new UpdatePlayerStatisticsRequest
-        {
-            Statistics = new List<StatisticUpdate>
+        GetKillCount(
+            value =>
             {
-                new StatisticUpdate
-                {
-                    StatisticName = LeaderboardSurvivalTimeName,
-                    Value = (int)currentSurvivalTime
-                }
-            }
-        };
+                previousKillCount = value;
 
-        PlayFabClientAPI.UpdatePlayerStatistics(request, OnUpdateStatisticsSuccess, OnUpdateStatisticsFailure);
+                GetSurvivalTime(
+                    value2 =>
+                    {
+                        previousSurvivalTime = value2;
+
+                        Debug.Log(previousKillCount);
+                        Debug.Log(previousSurvivalTime);
+                        Debug.Log(killCount);
+                        Debug.Log(survivalTimeSeconds);
+
+                    // 현재 기록이 이전 기록보다 낮으면 기록을 하지 않습니다.
+                    if (killCount <= previousKillCount && survivalTimeSeconds <= previousSurvivalTime)
+                        {
+                        // 기록을 하지 않고 종료합니다.
+                        return;
+                        }
+
+                        var statistics = new List<StatisticUpdate>
+                        {
+                        new StatisticUpdate { StatisticName = "KillCount", Value = killCount },
+                        new StatisticUpdate { StatisticName = "SurvivalTimeSeconds", Value = (int)survivalTimeSeconds }
+                        };
+
+                        var request = new UpdatePlayerStatisticsRequest { Statistics = statistics };
+                        PlayFabClientAPI.UpdatePlayerStatistics(request, OnUpdateStatisticsSuccess, OnUpdateStatisticsFailure);
+
+                    // 포톤에도 킬 수와 생존 시간 업로드
+                    PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
+                        {
+                        { "KillCount", killCount },
+                        { "SurvivalTimeSeconds", survivalTimeSeconds }
+                        });
+                    },
+                    error2 =>
+                    {
+                        Debug.LogError("Failed to get previous survival time: " + error2);
+                    }
+                );
+            },
+            error =>
+            {
+                Debug.LogError("Failed to get previous kill count: " + error);
+            }
+        );
     }
 
-  
+
+    private void GetKillCount(Action<int> onSuccess, Action<string> onFailure)
+    {
+        var request = new GetPlayerStatisticsRequest();
+        PlayFabClientAPI.GetPlayerStatistics(request,
+            result =>
+            {
+                var killCountStat = result.Statistics.Find(stat => stat.StatisticName == "KillCount");
+                if (killCountStat != null)
+                {
+                    onSuccess?.Invoke(killCountStat.Value);
+                }
+                else
+                {
+                    onFailure?.Invoke("Kill count statistic not found");
+                }
+            },
+            error =>
+            {
+                onFailure?.Invoke("Failed to get kill count: " + error.ErrorMessage);
+            }
+        );
+    }
+
+    private void GetSurvivalTime(Action<float> onSuccess, Action<string> onFailure)
+    {
+        var request = new GetPlayerStatisticsRequest();
+        PlayFabClientAPI.GetPlayerStatistics(request,
+            result =>
+            {
+                var survivalTimeStat = result.Statistics.Find(stat => stat.StatisticName == "SurvivalTimeSeconds");
+                if (survivalTimeStat != null)
+                {
+                    onSuccess?.Invoke(survivalTimeStat.Value);
+                }
+                else
+                {
+                    onFailure?.Invoke("Survival time statistic not found");
+                }
+            },
+            error =>
+            {
+                onFailure?.Invoke("Failed to get survival time: " + error.ErrorMessage);
+            }
+        );
+    }
+    public void UpdateKillCount(int killCount)
+    {
+        // 기존의 킬 수를 가져옵니다.
+        GetKillCount(
+            previousKillCount =>
+            {
+            // 현재 기록이 이전 기록보다 낮으면 기록을 하지 않습니다.
+            if (killCount <= previousKillCount)
+                {
+                // 기록을 하지 않고 종료합니다.
+                return;
+                }
+
+                var statistics = new List<StatisticUpdate>
+                {
+                new StatisticUpdate { StatisticName = "KillCount", Value = killCount }
+                };
+
+                var request = new UpdatePlayerStatisticsRequest { Statistics = statistics };
+                PlayFabClientAPI.UpdatePlayerStatistics(request, OnUpdateStatisticsSuccess, OnUpdateStatisticsFailure);
+
+            // 포톤에도 킬 수 업로드
+            PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
+                {
+                { "KillCount", killCount }
+                });
+            },
+            error =>
+            {
+                Debug.LogError("Failed to get previous kill count: " + error);
+            }
+        );
+    }
+
+    public void UpdateSurvivalTime(float survivalTimeSeconds)
+    {
+        // 기존의 생존 시간을 가져옵니다.
+        GetSurvivalTime(
+            previousSurvivalTime =>
+            {
+            // 현재 기록이 이전 기록보다 낮으면 기록을 하지 않습니다.
+            if (survivalTimeSeconds <= previousSurvivalTime)
+                {
+                // 기록을 하지 않고 종료합니다.
+                return;
+                }
+
+                var statistics = new List<StatisticUpdate>
+                {
+                new StatisticUpdate { StatisticName = "SurvivalTimeSeconds", Value = (int)survivalTimeSeconds }
+                };
+
+                var request = new UpdatePlayerStatisticsRequest { Statistics = statistics };
+                PlayFabClientAPI.UpdatePlayerStatistics(request, OnUpdateStatisticsSuccess, OnUpdateStatisticsFailure);
+
+            // 포톤에도 생존 시간 업로드
+            PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
+                {
+                { "SurvivalTimeSeconds", survivalTimeSeconds }
+                });
+            },
+            error =>
+            {
+                Debug.LogError("Failed to get previous survival time: " + error);
+            }
+        );
+    }
+
 
     private void OnUpdateStatisticsSuccess(UpdatePlayerStatisticsResult result)
     {
