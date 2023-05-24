@@ -25,6 +25,7 @@ public class StatusControllor : MonoBehaviour
     [SerializeField] private GameObject thirstynormal;
     [SerializeField] private GameObject hungryhigh;
     [SerializeField] private GameObject thirstyhigh;
+    public Transform theplayer;
     private RealtimeRankingSystem therankingsystem;
     private const int HP = 0, SP = 1, HUNGRY = 2, THIRSTY = 3;
     private bool statusactivated;
@@ -232,16 +233,20 @@ public class StatusControllor : MonoBehaviour
 
     void Update()
     {
-        HungryText();
-        ThirstyText();
-        currentspsound();
-        HungryThiTimeDamage();
-        Hungry();
-        Thirsty();
-        SPRechargeTime();
-        SPRecover();
-        GaugeUpdate();
-        IsPlayerDead();
+        if (!PauseScript.isPaused)
+        {
+            HungryText();
+            ThirstyText();
+            currentspsound();
+            HungryThiTimeDamage();
+            Hungry();
+            Thirsty();
+            SPRechargeTime();
+            SPRecover();
+            GaugeUpdate();
+            IsPlayerDead();
+            IsyPlayerDead();
+        }
     }
     [SerializeField] private float damageTime; 
     [SerializeField] private float currentDamageTime;
@@ -273,7 +278,21 @@ public class StatusControllor : MonoBehaviour
             recordkill.text = "Kill Count: " + thekillcount.killcount.ToString();
         }
     }
-   
+    public void IsyPlayerDead()
+    {
+        if (theplayer.position.y<-50)
+        {
+            TotalGameManager.isPlayerDead = true;
+            DeadText.gameObject.SetActive(true);
+            player.gameObject.SetActive(false);
+            therankingsystem.UpdateKillCount(thekillcount.killcount);
+            therankingsystem.UpdateSurvivalTime(TotalGameManager.survivaltimesecond);
+            recordtime.text = "Survival Time: " + TotalGameManager.survivaltimehour.ToString() + "H " + TotalGameManager.survivaltimeminute.ToString() +
+                "M " + TotalGameManager.survivaltimesecond.ToString("N1") + "S";
+            recordkill.text = "Kill Count: " + thekillcount.killcount.ToString();
+        }
+    }
+
 
     private void GaugeUpdate()
     {

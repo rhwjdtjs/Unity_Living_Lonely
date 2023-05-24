@@ -23,7 +23,7 @@ public class StartUIScript : MonoBehaviour
     }
     private void Timer()
     {
-        timesec.text = TotalGameManager.survivaltimesecond.ToString() + " sec";
+        timesec.text = TotalGameManager.survivaltimesecond.ToString("N1") + " sec";
     }
     IEnumerator timetext()
     {

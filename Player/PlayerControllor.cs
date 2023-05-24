@@ -35,6 +35,7 @@ public class PlayerControllor : MonoBehaviour
     private Rigidbody TheRigid;
     private CapsuleCollider TheCapsuleCol;
     private GunMainController thegunmain;
+    public static bool ispause=false;
     void Start()
     {
         thegunmain = FindObjectOfType<GunMainController>();
@@ -51,33 +52,36 @@ public class PlayerControllor : MonoBehaviour
 
     void Update()
     {
-     //   Debug.Log(GunMainController.isfire);
-        if (!TotalGameManager.isPlayerDead)
+        if (!ispause)
         {
-            IswalkingSound();
-            IsGround();
-            //Jump();
-            Running();
-            RunningCancel();
-            Move();
-            if (!Inventory.invectoryActivated)
+            //   Debug.Log(GunMainController.isfire);
+            if (!TotalGameManager.isPlayerDead)
             {
-                CameraRotation();
-                CharacterRotation();
+                IswalkingSound();
+                IsGround();
+                //Jump();
+                Running();
+                RunningCancel();
+                Move();
+                if (!Inventory.invectoryActivated)
+                {
+                    CameraRotation();
+                    CharacterRotation();
+                }
+                Crouch();
+                stamina();
             }
-            Crouch();
-            stamina();
-        }
-        if (Input.GetKeyDown(KeyCode.F5))
-        {
-            thesave.SaveData();
-            theplayfabsave.UploadSaveData();
-        }
-        if (Input.GetKeyDown(KeyCode.F6))
-        {
-            LoadingSceneManager.LoadScene("mainmenu");
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            if (Input.GetKeyDown(KeyCode.F5))
+            {
+                thesave.SaveData();
+                theplayfabsave.UploadSaveData();
+            }
+            if (Input.GetKeyDown(KeyCode.F6))
+            {
+                LoadingSceneManager.LoadScene("mainmenu");
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
         }
     }
     private void IsGround()

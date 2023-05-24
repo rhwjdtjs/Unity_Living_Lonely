@@ -23,6 +23,8 @@ public class RankingUI : MonoBehaviour
    
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         therealtime = FindObjectOfType<RealtimeRankingSystem>();
         rankingPanel.SetActive(false); // 초기에 랭킹 패널 비활성화
        

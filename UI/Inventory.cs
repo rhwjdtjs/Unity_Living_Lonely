@@ -35,19 +35,22 @@ public class Inventory : MonoBehaviour
 
     void Update()
     {
-        if (!TotalGameManager.isPlayerDead)
+        if (!PauseScript.isPaused)
         {
-            TryOpenInventory();
-            if (invectoryActivated)
+            if (!TotalGameManager.isPlayerDead)
             {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-            }
-                
-            if(!invectoryActivated)
-            { 
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
+                TryOpenInventory();
+                if (invectoryActivated)
+                {
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                }
+
+                if (!invectoryActivated)
+                {
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
+                }
             }
         }
         
@@ -56,7 +59,7 @@ public class Inventory : MonoBehaviour
 
     private void TryOpenInventory()
     {
-        if (Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.I))
         {
             invectoryActivated = !invectoryActivated;
             if (invectoryActivated)
@@ -64,6 +67,15 @@ public class Inventory : MonoBehaviour
             else
                 CloseInventory();
 
+        }
+        if(invectoryActivated)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                invectoryActivated = false;
+                CloseInventory();
+            }
+            
         }
     }
 
