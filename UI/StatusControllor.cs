@@ -266,7 +266,8 @@ public class StatusControllor : MonoBehaviour
             TotalGameManager.isPlayerDead = true;
             DeadText.gameObject.SetActive(true);
             player.gameObject.SetActive(false);
-            therankingsystem.UpdateStatistics(thekillcount.killcount, TotalGameManager.survivaltimesecond);
+            therankingsystem.UpdateKillCount(thekillcount.killcount);
+            therankingsystem.UpdateSurvivalTime(TotalGameManager.survivaltimesecond);
             recordtime.text = "Survival Time: " + TotalGameManager.survivaltimehour.ToString() + "H " + TotalGameManager.survivaltimeminute.ToString() +
                 "M " + TotalGameManager.survivaltimesecond.ToString("N1") + "S";
             recordkill.text = "Kill Count: " + thekillcount.killcount.ToString();

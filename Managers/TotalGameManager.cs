@@ -63,7 +63,9 @@ public class TotalGameManager : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.F11))
         {
-            rankingSystem.UpdateStatistics(killcount, survivaltimesecond);
+            rankingSystem.UpdateKillCount(killcount);
+            rankingSystem.UpdateSurvivalTime(survivaltimesecond);
+            Debug.Log("기록완료");
         }
         
     }
