@@ -13,8 +13,8 @@ public class RealtimeRankingSystem : MonoBehaviourPunCallbacks
     private const string LeaderboardSurvivalTimeName = "TotalSurvivalTime";
 
     // PlayFab에서 받은 API 키를 입력하세요.
-    private const string PlayFabTitleId = "1C256";
-    private const string PlayFabSecretKey = "C1IDMS1C1FF93ZSAN43KEQC7CJF8DFP9A8GO6CQ1KFE5DU14W4";
+    private const string PlayFabTitleId = "";
+    private const string PlayFabSecretKey = "";
 
     private int currentKillCount;
     private float currentSurvivalTime;

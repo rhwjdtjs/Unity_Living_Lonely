@@ -6,7 +6,7 @@ using PlayFab;
 using PlayFab.ClientModels;
 public class Playfabsave : MonoBehaviour
 {
-    private string titleId = "1C256";
+    private string titleId = "";
     private string saveDataPath;
 
     void Start()

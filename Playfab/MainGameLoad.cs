@@ -11,7 +11,7 @@ public class MainGameLoad : MonoBehaviour
 {
     private SaveLoad thesaveload;
     public static MainGameLoad instance;
-    private string titleId = "1C256";
+    private string titleId = "";
     private string saveDataKey = "gameSaveData";
     [SerializeField] private GameObject loaderrorpanel;
     [SerializeField] private GameObject gamestartpanel;
