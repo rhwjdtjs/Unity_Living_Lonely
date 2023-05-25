@@ -7,6 +7,7 @@ public class ItemRandomSpawn : MonoBehaviour
     [SerializeField] private GameObject[] items;
     [SerializeField] private BoxCollider SpawnLocation;
     [SerializeField] private GameObject[] bullets;
+    [SerializeField] private GameObject[] weapons;
     void Start()
     {
         SpawnItems();
@@ -14,14 +15,15 @@ public class ItemRandomSpawn : MonoBehaviour
 
     private void SpawnItems()
     {
-        int itemCount = Random.Range(3, 6); // 3에서 5 사이의 아이템 개수
-        itemCount = Mathf.Min(itemCount, items.Length); // 아이템 개수가 아이템 배열의 길이를 초과하지 않도록 제한
-
         List<int> itemIndices = new List<int>();
         List<int> BulletsIndices = new List<int>();
-
+        List<int> WeaponsIndices = new List<int>();
+        int itemCount = Random.Range(2, 4); // 3에서 5 사이의 아이템 개수
+        itemCount = Mathf.Min(itemCount, items.Length); // 아이템 개수가 아이템 배열의 길이를 초과하지 않도록 제한
+        int weaponcount = Random.Range(1, 3); // 3에서 5 사이의 아이템 개수
+        weaponcount = Mathf.Min(weaponcount, weapons.Length); // 아이템 개수가 아이템 배열의 길이를 초과하지 않도록 제한
         // bullets 아이템 생성
-        int bulletCount = Random.Range(1, 3); // 1에서 2 사이의 총알 개수
+        int bulletCount = Random.Range(2, 5); // 1에서 2 사이의 총알 개수
         bulletCount = Mathf.Min(bulletCount, bullets.Length); // 총알 개수가 총알 배열의 길이를 초과하지 않도록 제한
 
         for (int i = 0; i < bulletCount; i++)
@@ -31,6 +33,14 @@ public class ItemRandomSpawn : MonoBehaviour
             BulletsIndices.Add(randomIndex);
             GameObject spawnedBullet = Instantiate(bullets[randomIndex], randomPosition, Quaternion.identity);
             spawnedBullet.transform.parent = transform;
+        }
+        for (int i = 0; i < weaponcount; i++)
+        {
+            Vector3 randomPosition = GetRandomPosition();
+            int randomIndex = weaponGetRandomItemIndex(WeaponsIndices);
+            WeaponsIndices.Add(randomIndex);
+            GameObject spawnweapon = Instantiate(weapons[randomIndex], randomPosition, Quaternion.identity);
+            spawnweapon.transform.parent = transform;
         }
 
         // 나머지 아이템 생성
@@ -60,6 +70,15 @@ public class ItemRandomSpawn : MonoBehaviour
         while (excludedIndices.Contains(randomIndex))
         {
             randomIndex = Random.Range(0, bullets.Length);
+        }
+        return randomIndex;
+    }
+    private int weaponGetRandomItemIndex(List<int> excludedIndices)
+    {
+        int randomIndex = Random.Range(0, weapons.Length);
+        while (excludedIndices.Contains(randomIndex))
+        {
+            randomIndex = Random.Range(0, weapons.Length);
         }
         return randomIndex;
     }

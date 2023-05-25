@@ -12,6 +12,7 @@ public class Inventory : MonoBehaviour
     private EffectItem itemdatabase;
     private QuickSlot thequick;
     private Slot[] slots;
+    public Image crosshair;
     public Slot[] GetSlots() { return slots; }
     [SerializeField] private Item[] items;
     public void LoadToInven(int _arrayNum,string _itemname, int _itemnum)
@@ -42,12 +43,14 @@ public class Inventory : MonoBehaviour
                 TryOpenInventory();
                 if (invectoryActivated)
                 {
+                    crosshair.gameObject.SetActive(false);
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;
                 }
 
                 if (!invectoryActivated)
                 {
+                    crosshair.gameObject.SetActive(true);
                     Cursor.lockState = CursorLockMode.Locked;
                     Cursor.visible = false;
                 }
