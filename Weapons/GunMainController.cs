@@ -26,6 +26,7 @@ public abstract class GunMainController : MonoBehaviour
     protected float gunAccuracy;
     protected RaycastHit hitInfo;  // 총알의 충돌 정보
     [SerializeField] private Animator hitanim;
+    [SerializeField] private Camera mainCamera;
                                    // protected Slot[] theSlot;
     /*
     public virtual void GunMainChange(MeleeWeapon _closeWeapon)
@@ -274,6 +275,7 @@ public abstract class GunMainController : MonoBehaviour
             StartCoroutine(GunisfireFalse());
         }
     }
+    
     protected IEnumerator RetroActionCoroutine()
     {
         Vector3 recoilBack = new Vector3(originPos.x, originPos.x, currentGun.retroActionForce);     // 정조준 안 했을 때의 최대 반동
@@ -316,6 +318,8 @@ public abstract class GunMainController : MonoBehaviour
             }
         }
     }
+    
+   
 
     protected void TryReload()
     {

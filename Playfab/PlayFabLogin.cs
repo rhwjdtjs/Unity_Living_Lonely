@@ -31,7 +31,7 @@ public class PlayFabLogin : MonoBehaviour
     private string email;
     public void Start()
     {
-        PlayFabSettings.TitleId = "";
+        PlayFabSettings.TitleId = "≈∏¿Ã∆≤ID";
        
     }
     private void Update()
