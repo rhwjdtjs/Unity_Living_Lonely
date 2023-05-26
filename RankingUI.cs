@@ -5,7 +5,7 @@ using PlayFab;
 using PlayFab.ClientModels;
 using System.Collections.Generic;
 
-public class RankingUI : MonoBehaviour
+public class RankingUI : MonoBehaviour //랭킹의 ui를 담당하는 스크립트
 {
     public GameObject rankingPanel;
     public Text killCountText;
@@ -91,11 +91,10 @@ public class RankingUI : MonoBehaviour
     }
     private void UpdateUIWithPlayerId(string playerId)
     {
-        // 여기서 UI를 업데이트합니다.
-        // 필요한 경우 currentPlayerId를 사용하여 플레이어에 대한 추가 정보를 표시할 수 있습니다.
+      
     }
 
-    private string GetPlayerId()
+    private string GetPlayerId() //플레이어 아이디 확인
     {
         if (PlayFabClientAPI.IsClientLoggedIn())
         {
@@ -113,7 +112,7 @@ public class RankingUI : MonoBehaviour
         }
         return string.Empty;
     }
-    private void UpdateKillCountUI(List<PlayerLeaderboardEntry> leaderboard)
+    private void UpdateKillCountUI(List<PlayerLeaderboardEntry> leaderboard) //kill수 표시
     {
         string text = "Kill Count Ranking:\n";
 
@@ -121,16 +120,7 @@ public class RankingUI : MonoBehaviour
         {
             string playerId = leaderboard[i].DisplayName;
             int killCount = leaderboard[i].StatValue;
-
-            // 만약 현재 사용자의 PlayFabId와 playerId가 일치한다면, 추가적인 정보를 표시합니다
-         //   if (playerId == GetPlayerId())
-         //   {
                 text += $"<color=yellow>{leaderboard[i].Position + 1}. {playerId} - {killCount} kill</color>\n";
-         //   }
-        //    else
-        //    {
-         //       text += $"{leaderboard[i].Position + 1}. {playerId} - {killCount}\n";
-          //  }
         }
 
         if (killCountText != null)
@@ -139,7 +129,7 @@ public class RankingUI : MonoBehaviour
             Debug.LogError("killCountText is null.");
     }
 
-    private void UpdateSurvivalTimeUI(List<PlayerLeaderboardEntry> leaderboard)
+    private void UpdateSurvivalTimeUI(List<PlayerLeaderboardEntry> leaderboard) //생존시간 표시
     {
         string text = "Survival Time Ranking:\n";
         string currentPlayerId = GetPlayerId();
@@ -148,15 +138,9 @@ public class RankingUI : MonoBehaviour
         {
             string playerId = leaderboard[i].DisplayName;
             int survivalTime = leaderboard[i].StatValue;
-
-            // 만약 현재 사용자의 UserId와 PlayFabId가 일치한다면, 추가적인 정보를 표시합니다
            
                 text += $"<color=yellow>{leaderboard[i].Position + 1}. {playerId} - {survivalTime} seconds</color>\n";
-            
-          //  else
-          //  {
-         //       text += $"{leaderboard[i].Position + 1}. {playerId} - {survivalTime}\n";
-         //   }
+
         }
         survivalTimeText.text = text;
     }

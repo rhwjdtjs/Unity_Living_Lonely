@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandControllor : MeleeWeaponControllor
+public class HandControllor : MeleeWeaponControllor //Axecontoller와 설명 동일
 {
     public static bool isActivate = true;
     [SerializeField]private PlayerControllor thePlayer;

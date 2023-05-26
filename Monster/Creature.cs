@@ -7,11 +7,15 @@ public class Creature : AttackMonster
     protected override void Update()
     {
         base.Update();
+
+        // 시야에 플레이어가 있고, 죽지 않았으며, 공격 중이 아닐 때 추격을 시작합니다.
         if (theFieldOfViewAngle.Sight() && !isDead && !isAttacking)
         {
             StopAllCoroutines();
             StartCoroutine(CHASETARGETCO());
         }
+
+        // 생존 시간이 361초에서 610초 사이일 때
         if (TotalGameManager.survivaltimesecond >= 361 && TotalGameManager.survivaltimesecond <= 610)
         {
             if (theday.isNight)
@@ -27,6 +31,8 @@ public class Creature : AttackMonster
                 attackDamage = 15;
             }
         }
+
+        // 생존 시간이 611초 이상일 때
         if (TotalGameManager.survivaltimesecond >= 611)
         {
             if (theday.isNight)
@@ -43,12 +49,14 @@ public class Creature : AttackMonster
             }
         }
     }
+
     protected override void RESETACTION()
     {
         base.RESETACTION();
         RandomAction();
     }
-    private void Wait()  // 대기
+
+    private void Wait() // 대기
     {
         currentTime = waitTime;
     }
@@ -57,7 +65,7 @@ public class Creature : AttackMonster
     {
         RandomSound();
 
-        int _random = Random.Range(0, 3); // 대기, 풀뜯기, 두리번, 걷기
+        int _random = Random.Range(0, 3); // 대기, 소리치기,걷기
 
         if (_random == 0)
             Wait();
@@ -67,8 +75,7 @@ public class Creature : AttackMonster
             TryWalk();
     }
 
-
-    private void Shout()  // 두리번
+    private void Shout() // 소리치기
     {
         currentTime = waitTime;
         anim.SetTrigger("Shout");

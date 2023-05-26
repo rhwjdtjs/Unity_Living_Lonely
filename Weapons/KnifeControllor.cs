@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KnifeControllor : MeleeWeaponControllor
+public class KnifeControllor : MeleeWeaponControllor //Axecontoller와 설명 동일
 {
     public static bool isActivate = false;
     [SerializeField]private PlayerControllor thePlayer;

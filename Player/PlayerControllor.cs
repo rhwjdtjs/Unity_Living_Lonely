@@ -2,62 +2,64 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class PlayerControllor : MonoBehaviour
+
+public class PlayerController : MonoBehaviour
 {
-    private StatusControllor theStatusController;
-    [SerializeField]private float WalkSpeed;
-    [SerializeField]private float RunSpeed;
-    [SerializeField]private float CrouchSpeed;
-    [SerializeField]private float ApplySpeed;
-    [SerializeField]private float JumpForce;
-    [SerializeField]public bool isRun = false;
-    [SerializeField] private float CrPosY;
-    [SerializeField] private float LookSensitivity;
-    [SerializeField] private float CamRotationLimit;
-    [SerializeField] private Camera TheCam;
-    [SerializeField] private Animator HandAnim;
-    [SerializeField] private Animator Pistol1Anim;
-    [SerializeField] private Animator Rifle1Anim;
-    [SerializeField] private AudioSource thewalkaudio;
-    [SerializeField] private AudioSource therunningaudio;
-    [SerializeField] private AudioClip therunningclip;
-    [SerializeField] private SaveLoad thesave;
-    [SerializeField] private Playfabsave theplayfabsave;
-    public bool isWalk = false;
-    public bool isGround = true;
-    public bool isCrouch = false;
-    public float _moveDirX;
-    public float _moveDirZ;
-    private float OriginalPosY;
-    private float ApplyCrPosY;
-    private Vector3 lastPos;
-    private float CurrentCamRotationX;
-    private Rigidbody TheRigid;
-    private CapsuleCollider TheCapsuleCol;
-    private GunMainController thegunmain;
-    public static bool ispause=false;
+    private StatusController theStatusController; // 상태 컨트롤러 객체
+    [SerializeField] private float WalkSpeed; // 걷기 속도
+    [SerializeField] private float RunSpeed; // 달리기 속도
+    [SerializeField] private float CrouchSpeed; // 앉기 속도
+    [SerializeField] private float ApplySpeed; // 적용되는 속도
+    [SerializeField] private float JumpForce; // 점프 힘
+    [SerializeField] public bool isRun = false; // 달리는지 여부
+    [SerializeField] private float CrouchPosY; // 앉은 상태의 카메라 Y 위치
+    [SerializeField] private float LookSensitivity; // 마우스 감도
+    [SerializeField] private float CamRotationLimit; // 카메라 회전 제한
+    [SerializeField] private Camera TheCam; // 카메라 객체
+    [SerializeField] private Animator HandAnim; // 손 애니메이터
+    [SerializeField] private Animator Pistol1Anim; // 권총1 애니메이터
+    [SerializeField] private Animator Rifle1Anim; // 소총1 애니메이터
+    [SerializeField] private AudioSource theWalkAudio; // 걷는 소리 오디오 소스
+    [SerializeField] private AudioSource theRunningAudio; // 달리는 소리 오디오 소스
+    [SerializeField] private AudioClip theRunningClip; // 달리는 소리 클립
+    [SerializeField] private SaveLoad theSave; // 저장 및 불러오기 객체
+    [SerializeField] private PlayfabSave thePlayfabSave; // 플레이팹 저장 및 불러오기 객체
+    public bool isWalk = false; // 걷는지 여부
+    public bool isGround = true; // 땅에 닿아 있는지 여부
+    public bool isCrouch = false; // 앉은 상태인지 여부
+    public float moveDirX; // X축 이동 방향
+    public float moveDirZ; // Z축 이동 방향
+    private float originalPosY; // 원래 카메라 Y 위치
+    private float applyCrouchPosY; // 적용되는 앉은 상태의 카메라 Y 위치
+    private Vector3 lastPos; // 이전 위치
+    private float currentCamRotationX; // 현재 카메라 회전 X 값
+    private Rigidbody theRigid; // 리지드바디 컴포넌트
+    private CapsuleCollider theCapsuleCol; // 캡슐 콜라이더 컴포넌트
+    private GunMainController theGunMain; // 총기 메인 컨트롤러 객체
+    public static bool isPause = false; // 일시 정지 상태 여부
+
     void Start()
     {
-        thegunmain = FindObjectOfType<GunMainController>();
-        theStatusController = FindObjectOfType<StatusControllor>();
-        TheCapsuleCol = GetComponent<CapsuleCollider>();
-        TheRigid = GetComponent<Rigidbody>();
+        theGunMain = FindObjectOfType<GunMainController>();
+        theStatusController = FindObjectOfType<StatusController>();
+        theCapsuleCol = GetComponent<CapsuleCollider>();
+        theRigid = GetComponent<Rigidbody>();
 
         ApplySpeed = WalkSpeed;
 
-        OriginalPosY = TheCam.transform.localPosition.y;
-        ApplyCrPosY = OriginalPosY;
+        originalPosY = TheCam.transform.localPosition.y;
+        applyCrouchPosY = originalPosY;
         //IswalkingSound();
     }
 
     void Update()
     {
-        if (!ispause)
+        if (!isPause)
         {
             //   Debug.Log(GunMainController.isfire);
             if (!TotalGameManager.isPlayerDead)
             {
-                IswalkingSound();
+                IsWalkingSound();
                 IsGround();
                 //Jump();
                 Running();
@@ -69,12 +71,12 @@ public class PlayerControllor : MonoBehaviour
                     CharacterRotation();
                 }
                 Crouch();
-                stamina();
+                Stamina();
             }
             if (Input.GetKeyDown(KeyCode.F5))
             {
-                thesave.SaveData();
-                theplayfabsave.UploadSaveData();
+                theSave.SaveData();
+                thePlayfabSave.UploadSaveData();
             }
             if (Input.GetKeyDown(KeyCode.F6))
             {
@@ -84,39 +86,43 @@ public class PlayerControllor : MonoBehaviour
             }
         }
     }
+
+    // 땅에 닿아 있는지 체크하는 함수
     private void IsGround()
     {
         isGround = Physics.Raycast(transform.position, Vector3.down, TheCapsuleCol.bounds.extents.y + 0.1f);
     }
-    private void IswalkingSound()
+
+    // 걷는 소리 재생 함수
+    private void IsWalkingSound()
     {
         if (isWalk && !isRun)
         {
-            if (!thewalkaudio.isPlaying)
+            if (!theWalkAudio.isPlaying)
             {
-                thewalkaudio.Play();
-
+                theWalkAudio.Play();
             }
         }
 
         if (isRun)
         {
-            if (!therunningaudio.isPlaying)
+            if (!theRunningAudio.isPlaying)
             {
-                therunningaudio.PlayOneShot(therunningclip);
+                theRunningAudio.PlayOneShot(theRunningClip);
             }
         }
         else if (!isRun)
-            therunningaudio.Stop();
+        {
+            theRunningAudio.Stop();
+        }
 
         if (!isWalk)
-            therunningaudio.Stop();
-        
-        
-              
-                
-
+        {
+            theRunningAudio.Stop();
+        }
     }
+
+    // 점프 함수
     private void Jump()
     {
         if (Input.GetKeyDown(KeyCode.Space) && isGround)
@@ -124,28 +130,34 @@ public class PlayerControllor : MonoBehaviour
             if (isCrouch)
                 Crouch();
 
-            TheRigid.velocity = transform.up * JumpForce;
+            theRigid.velocity = transform.up * JumpForce;
         }
     }
+
+    // 달리기 함수
     private void Running()
     {
-        if (!thegunmain.isFindSightMode &&!isCrouch && theStatusController.GetCurrentSP() > 0)
+        if (!theGunMain.isFindSightMode && !isCrouch && theStatusController.GetCurrentSP() > 0)
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 if (isCrouch)
                     Crouch();
-                    isRun = true;
 
+                isRun = true;
                 ApplySpeed = RunSpeed;
             }
         }
     }
-    private void stamina()
+
+    // 체력 소모 함수
+    private void Stamina()
     {
         if (isRun == true)
             theStatusController.DecreaseStamina(10);
     }
+
+    // 달리기 취소 함수
     private void RunningCancel()
     {
         if (!isCrouch)
@@ -162,6 +174,8 @@ public class PlayerControllor : MonoBehaviour
             }
         }
     }
+
+    // 앉기 함수
     private void Crouch()
     {
         if (Input.GetKeyDown(KeyCode.C))
@@ -171,67 +185,72 @@ public class PlayerControllor : MonoBehaviour
             {
                 ApplySpeed = CrouchSpeed;
                 isWalk = false;
-                ApplyCrPosY = CrPosY;
+                applyCrouchPosY = CrouchPosY;
             }
             else
             {
                 ApplySpeed = WalkSpeed;
-                ApplyCrPosY = OriginalPosY;
+                applyCrouchPosY = originalPosY;
             }
 
-            StartCoroutine(CROUNCHCO());
+            StartCoroutine(CrouchCoroutine());
         }
     }
-    IEnumerator CROUNCHCO()
+
+    // 앉기 코루틴
+    IEnumerator CrouchCoroutine()
     {
-        float _posY = TheCam.transform.localPosition.y;
+        float posY = TheCam.transform.localPosition.y;
         int count = 0;
 
-        while (_posY != ApplyCrPosY)
+        while (posY != applyCrouchPosY)
         {
             count++;
-            _posY = Mathf.Lerp(_posY, ApplyCrPosY, 0.2f);
-            TheCam.transform.localPosition = new Vector3(0, _posY, 0);
+            posY = Mathf.Lerp(posY, applyCrouchPosY, 0.2f);
+            TheCam.transform.localPosition = new Vector3(0, posY, 0);
             if (count > 15)
                 break;
             yield return null;
         }
-        TheCam.transform.localPosition = new Vector3(0, ApplyCrPosY, 0);
+        TheCam.transform.localPosition = new Vector3(0, applyCrouchPosY, 0);
     }
 
+    // 이동 함수
     private void Move()
     {
-        _moveDirX = Input.GetAxisRaw("Horizontal");
-        _moveDirZ = Input.GetAxisRaw("Vertical");
+        moveDirX = Input.GetAxisRaw("Horizontal");
+        moveDirZ = Input.GetAxisRaw("Vertical");
 
-        Vector3 _moveHorizontal = transform.right * _moveDirX;
-        Vector3 _moveVertical = transform.forward * _moveDirZ;
-        Vector3 _velocity = (_moveHorizontal + _moveVertical).normalized * ApplySpeed;
+        Vector3 moveHorizontal = transform.right * moveDirX;
+        Vector3 moveVertical = transform.forward * moveDirZ;
+        Vector3 velocity = (moveHorizontal + moveVertical).normalized * ApplySpeed;
 
-        TheRigid.MovePosition(transform.position + _velocity * Time.deltaTime);
+        theRigid.MovePosition(transform.position + velocity * Time.deltaTime);
     }
-    
+
+    // 카메라 회전 함수
     private void CameraRotation()
     {
-        float _xRotation = Input.GetAxisRaw("Mouse Y");
-        float _cameraRotationX = _xRotation * LookSensitivity;
+        float xRotation = Input.GetAxisRaw("Mouse Y");
+        float cameraRotationX = xRotation * LookSensitivity;
 
-        CurrentCamRotationX -= _cameraRotationX;
-        CurrentCamRotationX = Mathf.Clamp(CurrentCamRotationX, -CamRotationLimit, CamRotationLimit);
+        currentCamRotationX -= cameraRotationX;
+        currentCamRotationX = Mathf.Clamp(currentCamRotationX, -CamRotationLimit, CamRotationLimit);
 
-        TheCam.transform.localEulerAngles = new Vector3(CurrentCamRotationX, 0f, 0f);
+        TheCam.transform.localEulerAngles = new Vector3(currentCamRotationX, 0f, 0f);
     }
 
+    // 캐릭터 회전 함수
     private void CharacterRotation()
     {
-        float _yRotation = Input.GetAxisRaw("Mouse X");
-        Vector3 _characterRotationY = new Vector3(0f, _yRotation, 0f) * LookSensitivity;
-        TheRigid.MoveRotation(TheRigid.rotation * Quaternion.Euler(_characterRotationY));
+        float yRotation = Input.GetAxisRaw("Mouse X");
+        Vector3 characterRotationY = new Vector3(0f, yRotation, 0f) * LookSensitivity;
+        theRigid.MoveRotation(theRigid.rotation * Quaternion.Euler(characterRotationY));
     }
+
+    // 달리기 여부 반환 함수
     public bool GetRun()
     {
         return isRun;
     }
 }
-
-

@@ -2,22 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class InputNumber : MonoBehaviour
 {
     private bool activated = false;
 
-    [SerializeField]
-    private Text text_Preview;
-    [SerializeField]
-    private Text text_Input;
-    [SerializeField]
-    private InputField if_text;
+    [SerializeField] private Text text_Preview; // 미리보기 텍스트
+    [SerializeField] private Text text_Input; // 입력 텍스트
+    [SerializeField] private InputField if_text; // 입력 필드
 
-    [SerializeField]
-    private GameObject go_Base;
+    [SerializeField] private GameObject go_Base; // 기본 게임 오브젝트
 
-    [SerializeField]
-    private CheckActions thePlayer;
+    [SerializeField] private CheckActions thePlayer; // 플레이어의 CheckActions 스크립트
 
     void Update()
     {
@@ -30,6 +26,7 @@ public class InputNumber : MonoBehaviour
         }
     }
 
+    // 아이템을 버리면 실행되는 함수
     public void Call()
     {
         go_Base.SetActive(true);
@@ -38,6 +35,7 @@ public class InputNumber : MonoBehaviour
         text_Preview.text = SlotUtil.instance.slotUtil.itemCount.ToString();
     }
 
+    // 취소 버튼 누르면 호출되는 함수
     public void Cancel()
     {
         activated = false;
@@ -46,6 +44,7 @@ public class InputNumber : MonoBehaviour
         SlotUtil.instance.slotUtil = null;
     }
 
+    // 확인 버튼 누르면 호출되는 함수
     public void OK()
     {
         SlotUtil.instance.SetColor(0);
@@ -65,10 +64,11 @@ public class InputNumber : MonoBehaviour
         else
             num = int.Parse(text_Preview.text);
 
-        StartCoroutine(DropItemCorountine(num));
+        StartCoroutine(DropItemCoroutine(num));
     }
 
-    IEnumerator DropItemCorountine(int _num)
+    // 아이템 드롭 코루틴
+    IEnumerator DropItemCoroutine(int _num)
     {
         for (int i = 0; i < _num; i++)
         {
@@ -87,6 +87,7 @@ public class InputNumber : MonoBehaviour
         activated = false;
     }
 
+    // 숫자 체크 함수
     private bool CheckNumber(string _argString)
     {
         char[] _tempCharArray = _argString.ToCharArray();

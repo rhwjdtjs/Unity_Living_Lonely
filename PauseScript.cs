@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class PauseScript : MonoBehaviour
+public class PauseScript : MonoBehaviour //인게임에서 일시정지하는 스크립트
 {
   
     public GameObject pauseMenuUI;

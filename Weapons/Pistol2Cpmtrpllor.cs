@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pistol2Cpmtrpllor : GunMainController
+public class Pistol2Cpmtrpllor : GunMainController//Rifle1controller와 설명 동일 
+{
 {
     public static bool isActivate = false;
     private Slot[] theSlot;

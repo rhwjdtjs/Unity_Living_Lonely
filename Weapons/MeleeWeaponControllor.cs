@@ -43,7 +43,8 @@ public abstract class MeleeWeaponControllor : MonoBehaviour
         yield return new WaitForSeconds(currentMeleeWeapon.attackDelay - currentMeleeWeapon.attackDelayA - currentMeleeWeapon.attackDelayB);
         isAttack = false;
     }
-
+    // 충돌 체크를 수행한다.
+    //무기로 충돌한 객체가 있는지 여부
     protected bool CheckObject()
     {
         if (Physics.Raycast(transform.position, transform.forward, out hitInfo, currentMeleeWeapon.range,layerMask))
@@ -53,8 +54,9 @@ public abstract class MeleeWeaponControllor : MonoBehaviour
 
         return false;
     }
-
+    // 데미지 적용을 위한 HIT 코루틴을 실행한다.
     protected abstract IEnumerator HITCO();
+    //근접 무기를 변경한다
 
     public virtual void MeleeChangeWeapon(MeleeWeapon _closeWeapon)
     {

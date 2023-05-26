@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class InputUI : MonoBehaviour
+public class InputUI : MonoBehaviour //INPUTNUMBER¿Í µ¿ÀÏ
 {
     [SerializeField] private Text text_Preview;
     [SerializeField] private Text text_Input;

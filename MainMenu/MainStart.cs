@@ -15,7 +15,7 @@ public class MainStart : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            LoadingSceneManager.LoadScene("gamescene");
+            LoadingSceneManager.LoadScene("gamescene"); //테스트용 스크립트
             //SceneManager.LoadScene("gamescene");
         }
 

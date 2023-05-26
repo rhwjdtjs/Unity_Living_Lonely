@@ -27,7 +27,7 @@ public class Rifle1Contollor : GunMainController
         
         if (isActivate)
         {
-            Ammotorifill();
+            Ammotorifill(); //매프레임마다 인벤토리에 탄약 확인
             
 
             GunFireRateCalc();
@@ -42,7 +42,7 @@ public class Rifle1Contollor : GunMainController
         }
         ammoappear();
     }
-    protected override void Ammotorifill()
+    protected override void Ammotorifill() //인벤토리에서 무기에 알맞은 탄약확인후 탄약 충전
     {
         currentGun.carryBulletCount = 0;
         for (int i = 0; i < theSlot.Length; i++)
@@ -58,7 +58,7 @@ public class Rifle1Contollor : GunMainController
         }
     }
 
-    protected override void ammoReload(int _reloadammo)
+    protected override void ammoReload(int _reloadammo) //인벤토리에 있는 탄약 사용하여 재장전
     {
         for (int i = 0; i < theSlot.Length; i++)
         {

@@ -4,18 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 public abstract class GunMainController : MonoBehaviour
 {
-    [SerializeField] protected LayerMask layerMask;
-    [SerializeField] public Gun currentGun; // 현재 들고 있는 총의Gun.cs 가 할당 됨.
-    [SerializeField] protected Camera theCam;  // 카메라 시점에서 정 중앙에 발사할 거라서
-    [SerializeField] protected Vector3 originPos;  // 원래 총의 위치(정조준 해제하면 나중에 돌아와야 하니까)
-    [SerializeField] protected GameObject hitEffectPrefab;  // 피격 이펙트
-    [SerializeField] protected PlayerControllor thePlayer;
-    [SerializeField] protected GameObject go_SlotsParent;
-    [SerializeField] protected Text GunText;
-    [SerializeField] protected GameObject themonsterblood;
-  
-   
-    
+    [SerializeField] protected LayerMask layerMask;               // 충돌을 검출할 레이어 마스크
+    [SerializeField] public Gun currentGun;                       // 현재 사용 중인 총의 정보가 할당될 Gun.cs
+    [SerializeField] protected Camera theCam;                      // 정중앙에 발사할 카메라 시점
+    [SerializeField] protected Vector3 originPos;                  // 정조준 해제 시 원래 총의 위치로 돌아갈 때 사용되는 위치 값
+    [SerializeField] protected GameObject hitEffectPrefab;         // 피격 이펙트 프리팹
+    [SerializeField] protected PlayerControllor thePlayer;        // 플레이어 컨트롤러 참조를 위한 변수
+    [SerializeField] protected GameObject go_SlotsParent;          // 슬롯 UI의 부모 오브젝트
+    [SerializeField] protected Text GunText;                      // 총의 정보를 표시할 텍스트 UI
+    [SerializeField] protected GameObject themonsterblood;         // 몬스터 체력을 표시할 게임 오브젝트
+
+
+
     public static bool isfire = false;
     //public static bool isActivate = true;
     protected float currentFireRate; // 이 값이 0 보다 큰 동안에는 총알이 발사 되지 않는다. 초기값은 연사 속도인 Gun.cs의 fireRate 
@@ -27,169 +27,75 @@ public abstract class GunMainController : MonoBehaviour
     protected RaycastHit hitInfo;  // 총알의 충돌 정보
     [SerializeField] private Animator hitanim;
     [SerializeField] private Camera mainCamera;
-                                   // protected Slot[] theSlot;
-    /*
-    public virtual void GunMainChange(MeleeWeapon _closeWeapon)
-    {
-        if (WeaponManager.WeaponNow != null)
-            WeaponManager.WeaponNow.gameObject.SetActive(false);
 
-        currentMeleeWeapon = _closeWeapon;
-        WeaponManager.WeaponNow = currentMeleeWeapon.GetComponent<Transform>();
-        WeaponManager.WeaponNowAnim = currentMeleeWeapon.anim;
-
-        currentMeleeWeapon.transform.localPosition = Vector3.zero;
-        currentMeleeWeapon.gameObject.SetActive(true);
-    }
-    */
-    /*
-    private void Start()
-    {
-        theSlot = go_SlotsParent.GetComponentsInChildren<Slot>();
-        audioSource = GetComponent<AudioSource>();
-        WeaponManager.WeaponNow = currentGun.GetComponent<Transform>();
-        WeaponManager.WeaponNowAnim = currentGun.anim;
-    }
-    */
-    /*
-        void Update()
-        {
-            AmmoItemRifill();
-            if (WeaponManager.isRifle)
-
-            {
-                GunFireRateCalc();
-                if (!Inventory.invectoryActivated)
-                {
-                    TryFindSight();
-
-                    TryFire();
-                    TryReload();
-                    Moving();
-                }
-            }
-        }
-    */
-    /*
-        public void AmmoItemRifill()
-        {
-            currentGun.carryBulletCount = 0;
-            for (int i = 0; i < theSlot.Length; i++)
-            {
-                if (theSlot[i].item != null)
-                {
-
-                    currentGun.carryBulletCount = theSlot[i].itemCount;
-                    return;
-
-                }
-            }
-        }
-    
-        private void ammoReload(int _reloadammo)
-        {
-            for (int i = 0; i < theSlot.Length; i++)
-            {
-                if (theSlot[i].item != null)
-                {
-
-                    if (theSlot[i].item.itemName == "7.62mm ammo")
-                    {
-                        theSlot[i].SetSlotCount(-_reloadammo);
-                        Debug.Log(_reloadammo);
-                        return;
-                    }
-
-
-                    if (theSlot[i].item.itemName == "5.56mm ammo")
-                    {
-                        theSlot[i].SetSlotCount(-_reloadammo);
-                        Debug.Log(_reloadammo);
-                        return;
-                    }
-
-                    if (theSlot[i].item.itemName == "9mm ammo")
-                    {
-                        theSlot[i].SetSlotCount(-_reloadammo);
-                        Debug.Log(_reloadammo);
-                        return;
-                    }
-
-
-                }
-            }
-        }
-    */
     protected abstract void ammoappear();
     protected abstract void Ammotorifill();
     protected abstract void ammoReload(int _reloadammo);
     protected IEnumerator GunisfireFalse()
     {
-        isfire = true;
-        yield return new WaitForSeconds(10f);
-        isfire = false;
+        isfire = true;                             // 총을 발사함
+        yield return new WaitForSeconds(10f);      // 10초간 대기
+        isfire = false;                            // 총을 발사하지않음
+        //좀비 사운드 체크때문에 해당 함수 사용
         yield return null;
     }
-   
+
     protected void Moving()
     {
-        if (!thePlayer.isRun && thePlayer.isGround)
+        if (!thePlayer.isRun && thePlayer.isGround)  // 플레이어가 달리지 않고 땅에 있을 때
         {
             if (thePlayer._moveDirZ >= 0.1f)
             {
-                thePlayer.isWalk = true;
+                thePlayer.isWalk = true;           // 앞으로 이동 중인 경우 걷는 상태로 설정
             }
             else if (thePlayer._moveDirZ <= -0.1f)
             {
-                thePlayer.isWalk = true;
+                thePlayer.isWalk = true;           // 뒤로 이동 중인 경우 걷는 상태로 설정
             }
             else if (thePlayer._moveDirX <= -0.1f)
             {
-                thePlayer.isWalk = true;
-
+                thePlayer.isWalk = true;           // 왼쪽으로 이동 중인 경우 걷는 상태로 설정
             }
             else if (thePlayer._moveDirX >= 0.1f)
             {
-                thePlayer.isWalk = true;
-
+                thePlayer.isWalk = true;           // 오른쪽으로 이동 중인 경우 걷는 상태로 설정
             }
             else
             {
-                thePlayer.isWalk = false;
+                thePlayer.isWalk = false;          // 이동하지 않는 경우 걷지 않는 상태로 설정
             }
 
-
-            currentGun.anim.SetBool("Walk", thePlayer.isWalk);
-
-
+            currentGun.anim.SetBool("Walk", thePlayer.isWalk);   // 걷는 애니메이션 활성화
         }
+
         if (thePlayer.isRun)
-            currentGun.anim.SetBool("Run", thePlayer.isRun);
+            currentGun.anim.SetBool("Run", thePlayer.isRun);     // 달리는 애니메이션 활성화
         else if (!thePlayer.isRun)
-            currentGun.anim.SetBool("Run", thePlayer.isRun);
+            currentGun.anim.SetBool("Run", thePlayer.isRun);     // 달리지 않는 애니메이션 활성화
     }
 
     public void CancelReload()
     {
         if (isReload)
         {
-            StopAllCoroutines();
-            isReload = false;
+            StopAllCoroutines();                  // 모든 코루틴 정지
+            isReload = false;                      // 재장전 취소 상태 설정
         }
     }
+
     public virtual void GunChange(Gun _gun)
     {
         if (WeaponManager.WeaponNow != null)
-            WeaponManager.WeaponNow.gameObject.SetActive(false);
+            WeaponManager.WeaponNow.gameObject.SetActive(false);   // 현재 총 비활성화
 
-        currentGun = _gun;
-        WeaponManager.WeaponNow = currentGun.GetComponent<Transform>();
-        WeaponManager.WeaponNowAnim = currentGun.anim;
+        currentGun = _gun;                           // 새로운 총 할당
+        WeaponManager.WeaponNow = currentGun.GetComponent<Transform>();    // 총의 위치 정보 업데이트
+        WeaponManager.WeaponNowAnim = currentGun.anim;        // 총의 애니메이션 정보 업데이트
 
-        currentGun.transform.localPosition = Vector3.zero;
-        currentGun.gameObject.SetActive(true);
+        currentGun.transform.localPosition = Vector3.zero;    // 총의 위치 초기화
+        currentGun.gameObject.SetActive(true);                // 새로운 총 활성화
 
-        //isActivate = true;
+        //isActivate = true;   // 활성화 상태로 설정
     }
     protected void TryFindSight()
     {
@@ -244,38 +150,32 @@ public abstract class GunMainController : MonoBehaviour
 
     protected void Shoot()
     {
-        if (isFindSightMode)
+        if (isFindSightMode)  // 조준 모드일 때
         {
-           
-            currentGun.anim.SetTrigger("FineSightShot");
-            currentGun.currentBulletCount--;
-            currentFireRate = currentGun.fireRate;  // 연사 속도 재계산
-            audioSource.PlayOneShot(currentGun.fire_Sound, 0.9f);
-            // SoundManager.instance.PlaySE("Shot");
-            currentGun.finesightmuzzle.Play();
-            Hit();
-            StopAllCoroutines();
-            StartCoroutine(RetroActionCoroutine());
-            StartCoroutine(GunisfireFalse());
+            currentGun.anim.SetTrigger("FineSightShot");      // 정조준 발사 애니메이션 재생
+            currentGun.currentBulletCount--;                  // 현재 탄약 수 감소
+            currentFireRate = currentGun.fireRate;            // 연사 속도 재계산
+            audioSource.PlayOneShot(currentGun.fire_Sound, 0.9f);  // 발사 사운드 재생
+            currentGun.finesightmuzzle.Play();                // 정조준 시 발사 이펙트 재생
+            Hit();                                            // 탄약이 맞은 대상 처리
+            StopAllCoroutines();                              // 모든 코루틴 정지
+            StartCoroutine(RetroActionCoroutine());           // 반동 코루틴 시작
+            StartCoroutine(GunisfireFalse());                 // 일정 시간 후 총 발사 가능 상태로 변경
         }
-        else
+        else  // 조준 모드가 아닐 때
         {
-            
-            currentGun.anim.SetTrigger("Shot");
-            currentGun.currentBulletCount--;
-
-            currentFireRate = currentGun.fireRate;  // 연사 속도 재계산
-            audioSource.PlayOneShot(currentGun.fire_Sound);
-            //SoundManager.instance.PlaySE("Shot");
-
-            currentGun.muzzleFlash.Play();
-            Hit();
-            StopAllCoroutines();
-            StartCoroutine(RetroActionCoroutine());
-            StartCoroutine(GunisfireFalse());
+            currentGun.anim.SetTrigger("Shot");               // 발사 애니메이션 재생
+            currentGun.currentBulletCount--;                  // 현재 탄약 수 감소
+            currentFireRate = currentGun.fireRate;            // 연사 속도 재계산
+            audioSource.PlayOneShot(currentGun.fire_Sound);   // 발사 사운드 재생
+            currentGun.muzzleFlash.Play();                    // 발사 이펙트 재생
+            Hit();                                            // 탄약이 맞은 대상 처리
+            StopAllCoroutines();                              // 모든 코루틴 정지
+            StartCoroutine(RetroActionCoroutine());           // 반동 코루틴 시작
+            StartCoroutine(GunisfireFalse());                 // 일정 시간 후 총 발사 가능 상태로 변경
         }
     }
-    
+
     protected IEnumerator RetroActionCoroutine()
     {
         Vector3 recoilBack = new Vector3(originPos.x, originPos.x, currentGun.retroActionForce);     // 정조준 안 했을 때의 최대 반동
@@ -352,9 +252,10 @@ public abstract class GunMainController : MonoBehaviour
             gunAccuracy = 0.001f;
         else
             gunAccuracy = 0.035f;
+
         return gunAccuracy;
     }
-   
+
     protected void Hit()
     {
         // 카메라 월드 좌표!! (localPosition이 아님)
@@ -371,17 +272,17 @@ public abstract class GunMainController : MonoBehaviour
                 hitanim.SetTrigger("hit");
                 // SoundManager.instance.PlaySE("Hit_Body");
                 audioSourceHit.PlayOneShot(currentGun.HitHead_Sound);
-                //파티클 시스템 추가
-                GameObject bloodeffect= Instantiate(themonsterblood, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+
+                // 파티클 시스템 추가
+                GameObject bloodeffect = Instantiate(themonsterblood, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
                 Destroy(bloodeffect, 2f);
-                //StartCoroutine(hitimage());
-               
+
                 hitInfo.transform.GetComponent<Creature>().Damage(currentGun.damage, transform.position);
-                
             }
-           
-           
+
             Debug.Log(hitInfo.transform.name);
+
+            // 피격 이펙트 생성
             GameObject clone = Instantiate(hitEffectPrefab, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
             Destroy(clone, 2f);
         }

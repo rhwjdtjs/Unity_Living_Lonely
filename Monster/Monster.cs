@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+
 public class Monster : MonoBehaviour
 {
     [SerializeField] protected string animalName; // 동물의 이름
@@ -32,10 +33,11 @@ public class Monster : MonoBehaviour
     protected AudioSource theAudio;
     protected TotalGameManager thekillcount;
     protected DayContollor theday;
+
     private void Awake()
     {
         nav = GetComponent<NavMeshAgent>();
-      //  nav.enabled = false;
+        //  nav.enabled = false;
     }
 
     protected void Start()
@@ -45,7 +47,7 @@ public class Monster : MonoBehaviour
         currentTime = waitTime;   // 대기 시작
         isAction = true;   // 대기도 행동
         theAudio = GetComponent<AudioSource>();
-      //  nav.enabled = true;
+        //  nav.enabled = true;
         theFieldOfViewAngle = GetComponent<FieldofView>();
         theStatus = FindObjectOfType<StatusControllor>();
 
@@ -56,26 +58,29 @@ public class Monster : MonoBehaviour
         if (!isDead)
         {
             Move();
-           // Rotation();
+            // Rotation();
             ElapseTime();
         }
-        if(theday.isNight)
+
+        // 낮과 밤에 따라 걷기와 뛰기 속력을 변경합니다.
+        if (theday.isNight)
         {
             walkSpeed = 4f;
             runSpeed = 7f;
-        }    
+        }
         else
         {
             walkSpeed = 1.5f;
             runSpeed = 3f;
         }
-        if(TotalGameManager.survivaltimesecond>=180 && TotalGameManager.survivaltimesecond<=360)
+
+        // 생존 시간에 따라 걷기와 뛰기 속력을 변경합니다.
+        if (TotalGameManager.survivaltimesecond >= 180 && TotalGameManager.survivaltimesecond <= 360)
         {
-            if(theday.isNight)
+            if (theday.isNight)
             {
                 walkSpeed = 6f;
                 runSpeed = 8f;
-                
             }
             else
             {
@@ -89,10 +94,11 @@ public class Monster : MonoBehaviour
     {
         if (isWalking || isRunning && !isDead)
         {
-         //   nav.enabled = true;
+            //   nav.enabled = true;
             nav.SetDestination(transform.position + destination * 5f);
         }
     }
+
     protected void ElapseTime()
     {
         if (isAction && !isDead)
@@ -105,9 +111,9 @@ public class Monster : MonoBehaviour
 
     protected virtual void RESETACTION()  // 다음 행동 준비
     {
-       // nav.enabled = true;
+        // nav.enabled = true;
         isAction = true;
-        
+
         isWalking = false;
         anim.SetBool("Walk", isWalking);
         isRunning = false;
@@ -119,12 +125,13 @@ public class Monster : MonoBehaviour
 
     protected void TryWalk()  // 걷기
     {
-       // nav.enabled = true;
+        // nav.enabled = true;
         currentTime = walkTime;
         isWalking = true;
         anim.SetBool("Walk", isWalking);
         nav.speed = walkSpeed;
     }
+
     public virtual void Damage(int _dmg, Vector3 _targetPos)
     {
         if (!isDead)
@@ -136,12 +143,12 @@ public class Monster : MonoBehaviour
                 Dead();
                 return;
             }
+
             if (_dmg >= 20)
             {
                 PlaySE(sound_Hurt);
                 anim.SetTrigger("Hit");
             }
-            // Run(_targetPos);
         }
     }
 
@@ -162,13 +169,12 @@ public class Monster : MonoBehaviour
         this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
         this.gameObject.GetComponent<BoxCollider>().enabled = false;
         Destroy(this.gameObject, 100f);
-        
+
         SpawnManager._reserveCount--;
     }
 
-    protected void RandomSound()
+    protected void Sound()
     {
-        int _random = Random.Range(0, 3);  // 돼지의 일상 사운드는 3 개
         PlaySE(sound_Normal);
     }
 

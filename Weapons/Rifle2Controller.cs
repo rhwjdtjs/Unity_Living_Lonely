@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rifle2Controller : GunMainController
+public class Rifle2Controller : GunMainController//Rifle1controller와 설명 동일 
+{
 {
     public static bool isActivate = false;
     //public static bool isActivate = true;
