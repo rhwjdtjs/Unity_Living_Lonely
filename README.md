@@ -1,9 +1,9 @@
 # Unity_Living_Lonely
-유니티 3D 로 제작한 오픈월드 생존 게임
-유니티 2021.3.0F1 버전
-HDRP 파이프 렌더링 사용
-Graphic api Vulkan
-DB Playfab 사용
+유니티 3D 로 제작한 오픈월드 생존 게임  
+유니티 2021.3.0F1 버전  
+HDRP 파이프 렌더링 사용  
+Graphic api Vulkan  
+DB Playfab 사용  
 
 플레이 영상
 ![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/ea85cd52-bfcd-45d6-b789-bc1d11a6c0db)
