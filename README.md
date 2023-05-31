@@ -99,36 +99,38 @@ https://youtu.be/qtte7avW9yM 유튜브 링크
 i키를 누르면 인벤토리가 뜨는데 인벤토리 중앙에 슬롯에는 아이템들을 획득하면 칸에 맞게 늘어나고 하단에는 퀵슬롯으로 무기나 아이템을 등록하면 1번부터 5번까지 숫자를 눌러 빠르게 사용할 수 있다.
 인벤토리는 i키 혹은 esc키를 눌러 닫을 수 있다.
 
-
-
-
-
-
-
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/5d7c3f30-92ef-4098-b7c3-db9c8dfb8e35)
 
 Esc 키를 누를시에 일시정지 화면이 뜬다. 일시정지 화면에서는 튜토리얼 확인과, 메인화면으로 갈 수 있는 버튼이 있다. Esc를 다시누르면 일시정지가 풀린다.
 3.게임의 배경 스토리
 3.1 적 오브젝트 소개
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/5c2b695b-940e-4fc8-800e-7db3d1caa398)
+
 적 오브젝트 들은 총 7가지로 좀비 6종류와 게임 시작 10분이 지나면 특별 스폰되는 기괴한 몬스터 한 오브젝트가 있다.
 3.2 시나리오
 바이러스와 이상현상으로 사람이 살 수 없게 된 가상의 섬 ‘체인버’에 특수 부대원인 ‘Adela(아델라)’를 파견하여 이상현상 바이러스의 원인을 파악하고 그들을 모두 제거하는 시나리오.
 4. 그래픽 
 4.1 게임의 그래픽 디자인 설명
-
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/e1016fcb-6866-4362-ab37-4a574b46aea5)
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/c050062b-9e15-4671-bc8b-8fb5e123d643)
 
 HDRP 파이프렌더링으로 기본적인 그래픽을 설정하였으며 품질은 중간으로 하였다.
 울트라로 하면 프레임 드랍이 엄청나게 생기는데 (쉐이더 문제로) 프레임이 절반정도 줄어든다. 품질은 떨어지지만 안정적인 프레임을 위해 전체적인 품질을 중간으로 설정
 원래 다이렉트 12를 사용하여 레이트레이싱을 적용할려 했으나 프로젝트 오류로인해 API를 불칸으로 사용하였다.
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/87218a42-814f-4fd2-ac4e-7bf5ffda68dd)
 
 렌더링 모드는 DLSS를 사용하였다. DLSS 를 사용하면 안티엘리어싱이 TAA밖에 사용하지 못하여 계단 현상이 있지만, 프레임 관리에 최적화되어 있어 DLSS를 사용하였다.
 4.2 캐릭터 디자인 및 애니메이션 설명
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/6ae5cda0-db77-486f-b88d-6f1287611aca)
 
 플레이어의 총기 애니메이션이다.
 1인칭 시점이기에 딱히 플레이어가 움직이는 것은 없고 총기 자체에 플레이어 손형태에 모델링이 같이 붙어있어서 총기, 근접무기 애니메이션으로 걷는 효과 뛰는 효과가 가능하다. 총기류 애니메이션은 오버라이드를 통해 모두 같은 애니메이션이다.
 애니메이션에는 걷기, 뛰기 , 쏘기, 정조준 , 무기 꺼내기, 무기 넣기, 재장전. 정조준 사격 이있다.
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/9f3dd8d9-aefb-4384-9a41-3043354c8f19)
 
 근접무기 애니메이션이다. 오버라이드를 통해 모두 같은 애니메이션이다.
 근접무기 애니메이션으로는 걷기, 뛰기, 공격 무기 꺼내기가 있다.
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/04499ddb-2eae-4e5f-8dfb-6826d61eee52)
 
 적 오브젝트 애니메이션이다. 모두 오버라이드로 형태는 같고 종류로는 맞았을 때, 걸을때, 소리칠때. 죽을때, 달릴때, 공격할때 애니메이션이 있다.
 5. 사운드 및 음악
@@ -141,6 +143,9 @@ HDRP 파이프렌더링으로 기본적인 그래픽을 설정하였으며 품�
 
 6. 레벨디자인
 6.1 레벨 구성 요소 설명
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/16a4b470-94e9-48ca-ac2e-8c2c6107023d)
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/bfc87091-a24a-4afc-99d7-5947c90dacab)
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/e3e107e3-9ffa-48ef-b068-d06bd4466c05)
 
 기본적으로 필드레벨에는 나무, 풀, 물로 구성되어 있고 그 위에 건물들이 있다. 그리고 건물안에는 파밍할 수 있는 책상이 존재한다. 레벨 구성은 간단한 편이다. 
 6.2 난이도 조절 
@@ -149,20 +154,28 @@ HDRP 파이프렌더링으로 기본적인 그래픽을 설정하였으며 품�
 7. 인터페이스 및 사용자 경험
 7.1 메뉴 및 UI 디자인 설명
 몇몇 설명은 2.2 절에서 설명하여 설명한 것은 간단히 진행.
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/d4ca66be-1a7f-492d-88e9-03cc4d3e0db2)
 
 일시정지UI
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/cc044f64-4799-486b-af3d-28e88b931e13)
+
 인게임 UI
 
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/69a2aabe-d2e2-479a-b1b3-66710390aadd)
 
 인벤토리 UI
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/f1ad506f-109c-484c-ab0a-0c74337bce26)
 
 튜토리얼 UI로 총 5페이지가 있고 페이지마다 메인화면으로 갈 수 있으며 2페이지에서 4페이지까지는 이전페이지 및 다음페이지로가는 것이 존재하고 1페이지에는 다음페이지 버튼만, 5페이지는 이전페이지 버튼만 있다.
 
 
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/911fd196-7a0f-4a3b-8e05-0fc419acf7d4)
 
 로그인 UI다 아이디와 비밀번호를 입력할 수 있고 아이디가 있다면 로그인 없다면 회원가입을 할 수 있다.
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/585611b1-f43b-483b-915b-36e714655c37)
 
 로그인을 성공하고 나오는 UI이다. 새로운 게임을 시작하거나 기존의 게임을 불러오거나 랭킹을 확인 할 수 있다.
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/06abd46a-2e68-43cc-bafc-6771f65ed8de)
 
 랭킹을 표시하는 UI이다. 킬수와 생존시간이 오름차순으로 정렬되어 최대 10개까지 표시된다.
 
