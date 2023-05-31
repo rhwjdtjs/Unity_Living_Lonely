@@ -6,8 +6,8 @@ Graphic api Vulkan
 DB Playfab 사용
 
 플레이 영상
-
-
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/ea85cd52-bfcd-45d6-b789-bc1d11a6c0db)
+https://youtu.be/qtte7avW9yM 유튜브 링크
 
 
 
@@ -89,10 +89,12 @@ DB Playfab 사용
 
 메인화면이다.
 메인화면에서는 튜토리얼 확인, 게임 로그인하여 랭킹보기 및 게임 시작 그리고 종료가 있다.
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/41e06cba-1222-4710-a821-53268a8d4f2f)
 
 인게임 화면에서는 wasd 로 플레이어가 움직일 수 있으며, c키로 앉기 shift키로 달리기등 플레이가 가능하며 가운데 상단에 일자 나침반 하단 좌측에 현재 착용중인 무기 아이콘,
 하단 중앙에는 플레이어의 체력,스테미나,배고픔,목마름 상태 우측에는 탄약표시다. 
 우측 상단에는 현재 생존한 시간이 표시된다. 화면중앙에는 크로스헤어로 크로스헤어 중앙으로 적을 맞추면 히트가된다.
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/182d465d-98ad-45ad-93f5-19a0db331531)
 
 i키를 누르면 인벤토리가 뜨는데 인벤토리 중앙에 슬롯에는 아이템들을 획득하면 칸에 맞게 늘어나고 하단에는 퀵슬롯으로 무기나 아이템을 등록하면 1번부터 5번까지 숫자를 눌러 빠르게 사용할 수 있다.
 인벤토리는 i키 혹은 esc키를 눌러 닫을 수 있다.
