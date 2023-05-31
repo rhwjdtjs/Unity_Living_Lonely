@@ -183,3 +183,70 @@ RAM 8GB                RAM 16GB
 RTX 2060                RTX2070SUPER  
 최소 사양 기준으로 평균 50~60프레임 나온다.  
 
+요구 사항 기술서  
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/6489ff91-d54e-453c-b6fb-8733f54dc5d6)
+
+게임 모듈  
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/6133bab3-7dcf-45cc-beb8-4878c89fef4e)  
+게임시스템모듈에 사용한 스크립트  
+1.SaveNLoad.cs(게임의 저장 및 불러오기 기본적인 함수가 있는 스크립트)  
+2.Maingameload.cs(게임의 데이터를 가지고 로드하는데 필요한 스크립트)  
+3. 나머지 기능은 엔진내에서 기능구현함.  
+
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/ca6e6781-145f-4725-8d4e-06a8f4799319)  
+아이템모듈이다.  
+1. EffectItem.cs(기본적인 아이템 효과를 받기위한 스크립트이다.)  
+2. Item.cs(아이템의 정보를 기록하는 스크립트이다.)  
+3. StatusController.cs(아이템의 효과를 받기위해 플레이어 상태를 나타내는 스크립트이다.)  
+4. GunTextEditor.cs(현재 장탄수를 표시하게 해주는 스크립트이다.)  
+5. CheckActions.cs(필드에 있는 아이템을 화면 중앙에 위치시키면 주울수 있는 ui가 뜨도록 하는 스크립트이다.)  
+6. InputNumber.cs(인벤토리에 있는 아이템을 필드에 버릴 때 사용하는 스크립트이다.)  
+7. inventory.cs(아이템을 얻고 인벤토리 ui를 기본적으로 구성하는 스크립트이다.)  
+8. QuickSlot.cs(인벤토리 외 퀵슬롯을 구성하기 위한 스크립트이다.)  
+9. Slot.cs(아이템을 획득하면 인벤토리 내에 슬롯에 각각 저장해야 하는데 그걸 위한 스크립트이다. 또한 아이템 드래그와 같은 기능을 담당한다.)  
+10.SlotUtil.cs(기본적으로 슬롯의 ui를 담당한다.)  
+11.ToolTip.cs(인벤토리의 아이템을 마우스로 가져다대면 아이템의 정보가 나오느데 그걸 위한 스크립트이다.)  
+12.Gun.cs(총의 반동정도, 	재장전시간, 총의 이름과 같은 기본적인 정보를 담고 있는 스크립트이다.)  
+13.GunmainController.cs(총기의 공통적인 부분인 정조준, 사격, 애니메이션과 같은 공통된 기능들이 담겨있는 스크립트이다.)  
+14.PISTOL1~2controller, rifle1~3controller, tommyguncontroller.cs(각각 총기들의 스크립트로 gunmaincontroller의 자식객체들이다. 총마다 재장전에 따른 사운드 다른 탄약을 쓰게 때문에 각각의 스크립트를 갖고있다.)  
+15. meleeweapon.cs(gun.cs와 마찬가지로 근접공격의 이름, 공격 딜레이와 같은 기본적인 정보가 담겨있는 스크립트이다.)  
+16. meleeweaponcontroller.cs(객체 판단, 공격, 및 타격, 무기교체와 같은 기능이 담겨있는 스크립트이다.  
+17.knifecontroller, axecontroller,handcontroller.cs(각각의 근접무기 스크립트로 meleeweaponcontroller의 자식객체로 각각의 무기 애니메이션, 히트 관련하여 스크립트가 있다.)  
+18.weaponmanager.cs(무기를 교체하기위해 무기정보를 등록한 무기 관리 스크립트이다.)  
+
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/6eb59d7c-1f6d-4828-a506-48d363f2af70)   
+디스플레이 모듈이다. 대부분 유니티 엔진내에서 기능을 담당하지만  
+스크립트도 포함되어 있다.  
+1.	flashlightcontroller.cs(플레시라이트 아이템이 있을시 불을 끄고 키게하는 기능을 가진 스크립트이다.)  
+2.	statuscontroller.cs(플레이어의 목마름,배고픔,체력,기력을 나타내는 스크립트이다.)  
+
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/028a14a4-929b-4f1c-acb5-89286697993d)  
+오브젝트 모듈은 사운드 적인 부분은 엔진내에서 처리 나머지는 스크립트로 구동된다.  
+1.	Monster.cs(몬스터들의 이름이나 걷기속도와 같은 기본적인 기능을 가지고 있는 스크립트이다.)  
+2.	Attackmonster.cs(몬스터들중에 공격하는 몬스터들의 기능을 가지고 있는 스크립트이다.)  
+3.	Creature.cs(공격하는 몬스터들중에 이름이 creature인 몬스터들의 기능을 담고 있는 스크립트이다. 현재는 좀비와 괴물만 있지만 둘이 같은 스크립트를 사용한다.)  
+4.	FieldofView.cs(좀비의 기본적인 ai를 담당한다. 좀비가 플레이어를 인지 및 공격을 하는데 주로 사용되는 스크립트이다.)  
+5.	Playercontroller.cs(플레이어의 기본적인 움직임을 담당하는 스크립트이다. 위에서 사용되는건 발소리 관련부분이 해당 스크립트에 있다.  
+6.	ItemRandomSpawn.cs(필드에 램덤으로 아이템을 생성하는 스크립트이다.)  
+7.	Playerspawnmanager.cs(플레이어를 지정된 장소에서 랜덤으로 배치하는 스크립트이다.)  
+8.	Spawnmanager.cs(좀비의 스폰을 담당하는 스크립트이다.  
+다음으로는 환경모듈이다.  
+환경모듈도 대부분의 기능이 유니티엔진내에서 작동한다.  
+사용된 스크립트는  
+1.	DayController.cs(태양을 일정속도로 회전시켜 낮과 밤을 구분한다.)  
+
+![image](https://github.com/rhwjdtjs/Unity_Living_Lonely/assets/42109688/4276bd21-b92e-40ce-96cc-84e91c3801ea)  
+
+마지막으로 통신모듈이다.  
+통신모듈은 모두 스크립트를 이용하였다.  
+1.	RankingUI.CS(랭킹의 UI를 담당하는 스크립트이다.)  
+2.	RealtimeRankingSystem.cs(플레이어의 킬수와, 생존시간을 업로드하고 업로드한 데이터를 받아와 랭킹 ui에 표시하게 해주는 스크립트이다.)  
+3.	MaingameLoad.cs(플레이 팹에서 업로드된 플레이어 세이브 데이터를 가져와 게임을 이어서하게 해준다.)  
+4.	Playfablogin.cs(플레이팹에 로그인하게 해주는 스크립트이다.  
+5.	Playfabsave.cs(플레이 팹 디비에 게임 데이터를 업로드하게 해주는 스크립트이다.  
+
+
+
+
+
+
