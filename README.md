@@ -10,12 +10,16 @@ DB Playfab 사용
 https://youtu.be/qtte7avW9yM 유튜브 링크
 
 
-
-
-
-
-
-
+일부 코드는 인프런에서 수강한 케이디님의 강의에서 도움 받은 코드도 있습니다.
+무분별한 코드사용은 중지 부탁드립니다.
+현재는 관련코드를 내린 상태입니다.
+https://www.inflearn.com/course/unity-2/dashboard
+제작에 도움이 된 인프런 강의입니다.
+Some of the codes were helped by Kedy's lectures that I took on Infron.
+Please stop using the code indiscriminately.
+Currently, the relevant code has been issued.
+https://www.inflearn.com/course/unity-2/dashboard
+It's a lecture that helped with the production.
 
 목차  
 1. 게임 개요  
@@ -244,7 +248,6 @@ RTX 2060                RTX2070SUPER
 3.	MaingameLoad.cs(플레이 팹에서 업로드된 플레이어 세이브 데이터를 가져와 게임을 이어서하게 해준다.)  
 4.	Playfablogin.cs(플레이팹에 로그인하게 해주는 스크립트이다.  
 5.	Playfabsave.cs(플레이 팹 디비에 게임 데이터를 업로드하게 해주는 스크립트이다.  
-
 
 
 
