@@ -21,8 +21,8 @@ Some of the codes were helped by Kedy's lectures that I took on Inflrean.
 Please stop using the code indiscriminately.  
 Currently, the relevant code has been issued even a little bit.   
 https://www.inflearn.com/   
-This is an inflrean site that provided lectures that helped with the production.
-Name of lecture: 케이디 님의 유니티 3D 실전 생존게임 만들기 -ADVANCED
+This is an inflrean site that provided lectures that helped with the production.  
+Name of lecture: 케이디 님의 유니티 3D 실전 생존게임 만들기 -ADVANCED  
   
 목차  
 1. 게임 개요  
