@@ -13,13 +13,13 @@ https://youtu.be/qtte7avW9yM 유튜브 링크
 일부 코드는 인프런에서 수강한 케이디님의 강의에서 도움 받은 코드도 있습니다.  
 무분별한 코드사용은 중지 부탁드립니다.  
 현재는 관련코드를 내린 상태입니다.  
-https://www.inflearn.com/course/unity-2   
+https://www.inflearn.com/  
 제작에 도움이 된 인프런 강의입니다.  
   
 Some of the codes were helped by Kedy's lectures that I took on Inflrean.  
 Please stop using the code indiscriminately.  
 Currently, the relevant code has been issued.  
-https://www.inflearn.com/course/unity-2     
+https://www.inflearn.com/   
 It's a lecture that helped with the production.  
   
 목차  
