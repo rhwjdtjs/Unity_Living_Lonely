@@ -12,15 +12,17 @@ https://youtu.be/qtte7avW9yM 유튜브 링크
 
 일부 코드는 인프런에서 수강한 케이디님의 강의에서 도움 받은 코드도 있습니다.  
 무분별한 코드사용은 중지 부탁드립니다.  
-현재는 관련코드를 내린 상태입니다.  
+현재는 조금이라도 관련된 코드를 내린 상태입니다.  
 https://www.inflearn.com/  
-제작에 도움이 된 인프런 강의입니다.  
+제작에 도움이 된 강의를 제공한 인프런 사이트 입니다.   
+강의명: 케이디 님의 유니티3D 실전 생존게임 만들기 -ADVANCED 입니다.   
   
 Some of the codes were helped by Kedy's lectures that I took on Inflrean.  
 Please stop using the code indiscriminately.  
-Currently, the relevant code has been issued.  
+Currently, the relevant code has been issued even a little bit.   
 https://www.inflearn.com/   
-It's a lecture that helped with the production.  
+This is an inflrean site that provided lectures that helped with the production.
+Name of lecture: 케이디 님의 유니티 3D 실전 생존게임 만들기 -ADVANCED
   
 목차  
 1. 게임 개요  
