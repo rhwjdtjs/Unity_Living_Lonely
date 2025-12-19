@@ -205,7 +205,6 @@
 - 메인 메뉴: F6 (구현 기준)
 
 </details>
----
 
 ## Detail Gallery (Screenshots)
 
