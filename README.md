@@ -6,7 +6,7 @@
 
 **Quick Links**
 - 🎮 Gameplay Video: https://youtu.be/qtte7avW9yM?si=CLguTa88gA9RqQct  
-- 📘 Technical Doc: README 하단 섹션  
+- 📘 [Technical Doc](#0-TOC) 
 
 ---
 
@@ -99,6 +99,7 @@
 <details>
   <summary><b>📘 Technical Documentation (Living Lonely 기술서) (펼치기)</b></summary>
 
+<a id="0-TOC"></a>
 ## TOC
 - [1. 전체 게임 루프](#1-전체-게임-루프)
 - [2. 로딩 & 씬 전환](#2-로딩--씬-전환)
