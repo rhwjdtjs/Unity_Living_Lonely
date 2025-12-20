@@ -1,5 +1,5 @@
 # Living Lonely (Unity 3D Survival Game)
-> HDRP 기반 1인칭 생존 게임 · **PlayFab 로그인/클라우드 세이브/리더보드**
+> HDRP 기반 1인칭 유니티 생존 게임 / **PlayFab 로그인/클라우드 세이브/리더보드**
 
 **About**
 - 🏆 2023년 캡스톤 디자인-산학 캡스톤 디자인 연계 개인 프로젝트 (Unity)  
